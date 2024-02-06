@@ -1,0 +1,4 @@
+rootProject.name = 'introme-server'
+
+include 'intro-me-interface'
+include 'intro-me-domain'
