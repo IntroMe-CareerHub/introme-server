@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation project(":intro-me-domain")
+    implementation(project(":intro-me-domain"))
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
