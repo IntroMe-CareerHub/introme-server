@@ -38,7 +38,12 @@ subprojects {
 
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.hibernate:hibernate-core:6.4.4.Final'
+		implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.7.3'
+		implementation 'com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 		compileOnly 'org.projectlombok:lombok'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		runtimeOnly 'com.mysql:mysql-connector-j'
 	}
 }
