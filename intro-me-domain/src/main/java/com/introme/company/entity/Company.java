@@ -1,8 +1,8 @@
 package com.introme.company.entity;
 
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Map;
 
@@ -15,7 +15,8 @@ public class Company {
     private String name;
     @Column(nullable = false)
     private String image;
-    @Type(JsonType.class)
+
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(nullable = false)
     private Map<String, Object> information;
 }
