@@ -1,22 +1,33 @@
 package com.introme.company;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.introme.company.dto.CompanyDTO;
+import com.introme.company.entity.Company;
+import com.introme.talent.TalentService;
+import com.introme.talent.dto.TalentDTO;
+import com.introme.talent.entity.Talent;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
+@RequestMapping("/api/v1")
 @RestController
 public class CompanyRestController {
 
     private final CompanyService companyService;
+    private final TalentService talentService;
 
-    public CompanyRestController(CompanyService companyService) {
-        this.companyService = companyService;
+    @PostMapping(value = "/company/save")
+    public ResponseEntity<Company> saveCompanyData(@RequestBody CompanyDTO companyDTO) {
+        var data = companyService.save(companyDTO);
+        return ResponseEntity.ok(data);
     }
 
-
-    @GetMapping(value = "api/v1/hello")
-    public String hello() {
-        return "hello intro me";
+    @PostMapping(value = "/talent/save")
+    public ResponseEntity<Talent> saveTalentData(@RequestBody TalentDTO talentDTO) {
+        var data = talentService.save(talentDTO);
+        return ResponseEntity.ok(data);
     }
 }
