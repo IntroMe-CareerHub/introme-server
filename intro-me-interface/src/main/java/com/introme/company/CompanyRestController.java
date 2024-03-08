@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
@@ -28,6 +30,13 @@ public class CompanyRestController {
     @PostMapping(value = "/talent/save")
     public ResponseEntity<Talent> saveTalentData(@RequestBody TalentDTO talentDTO) {
         var data = talentService.save(talentDTO);
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping(value = "/company/list")
+    public ResponseEntity<List<Company>> getCompanyList() {
+        var data = companyService.findAllCompany();
+        System.out.println(data);
         return ResponseEntity.ok(data);
     }
 }

@@ -6,6 +6,8 @@ import com.introme.company.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CompanyService {
@@ -15,4 +17,7 @@ public class CompanyService {
         return companyRepository.save(Company.toEntity(companyDTO));
     }
 
+    public List<Company> findAllCompany() {
+        return companyRepository.findAll();
+    }
 }
