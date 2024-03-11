@@ -1,13 +1,15 @@
 package com.introme.talent.entity;
 
 import com.introme.company.entity.Company;
-import com.introme.talent.dto.TalentDTO;
+import com.introme.talent.dto.request.TalentReqDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Talent {
@@ -32,10 +34,11 @@ public class Talent {
         this.company = company;
     }
 
-    public static Talent toEntity(TalentDTO talentDTO, Company company) {
+    public static Talent toEntity(TalentReqDTO talentReqDTO, Company company) {
         return Talent.builder()
-                .keyword(talentDTO.getKeyword())
-                .description(talentDTO.getDescription())
+                .id(talentReqDTO.getId())
+                .keyword(talentReqDTO.getKeyword())
+                .description(talentReqDTO.getDescription())
                 .company(company)
                 .build();
     }

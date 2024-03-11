@@ -1,4 +1,4 @@
-package com.introme.talent.dto;
+package com.introme.talent.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TalentDTO {
+public class TalentReqDTO {
+    @NonNull
+    private Long id;
+
     @NonNull
     private String keyword;
 

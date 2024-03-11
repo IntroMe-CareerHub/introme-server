@@ -2,7 +2,7 @@ package com.introme.talent;
 
 import com.introme.company.entity.Company;
 import com.introme.company.repository.CompanyRepository;
-import com.introme.talent.dto.TalentDTO;
+import com.introme.talent.dto.request.TalentReqDTO;
 import com.introme.talent.entity.Talent;
 import com.introme.talent.repository.TalentRepository;
 import lombok.AllArgsConstructor;
@@ -14,10 +14,10 @@ public class TalentService {
     private TalentRepository talentRepository;
     private final CompanyRepository companyRepository;
 
-    public Talent save(TalentDTO talentDTO) {
-        Company company = companyRepository.findById(talentDTO.getCompanyId())
-                .orElseThrow(() -> new IllegalArgumentException("Company not found with this id:" + talentDTO.getCompanyId()));
+    public Talent save(TalentReqDTO talentReqDTO) {
+        Company company = companyRepository.findById(talentReqDTO.getCompanyId())
+                .orElseThrow(() -> new IllegalArgumentException("Company not found with this id:" + talentReqDTO.getCompanyId()));
 
-        return talentRepository.save(Talent.toEntity(talentDTO, company));
+        return talentRepository.save(Talent.toEntity(talentReqDTO, company));
     }
 }
