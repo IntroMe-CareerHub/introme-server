@@ -6,6 +6,9 @@ import lombok.*;
 @Getter
 public class CompanyReqDTO {
     @NonNull
+    private Long id;
+
+    @NonNull
     private String name;
 
     @NonNull

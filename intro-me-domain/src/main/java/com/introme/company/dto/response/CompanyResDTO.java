@@ -6,6 +6,8 @@ import lombok.*;
 
 @Getter
 public class CompanyResDTO {
+    @NonNull
+    private Long id;
 
     @NonNull
     private String name;

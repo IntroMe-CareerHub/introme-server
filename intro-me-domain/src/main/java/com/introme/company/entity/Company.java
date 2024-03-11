@@ -25,7 +25,8 @@ public class Company {
     private CompanyInfo information;
 
     @Builder
-    public Company(String name, String image, CompanyInfo information) {
+    public Company(Long id, String name, String image, CompanyInfo information) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.information = information;
@@ -33,6 +34,7 @@ public class Company {
 
     public static Company toEntity(CompanyReqDTO companyReqDTO) {
         return Company.builder()
+                .id(companyReqDTO.getId())
                 .name(companyReqDTO.getName())
                 .image(companyReqDTO.getImage())
                 .information(companyReqDTO.getInformation())
