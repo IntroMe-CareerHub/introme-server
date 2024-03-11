@@ -1,11 +1,11 @@
 package com.introme.company;
 
 
-import com.introme.company.dto.CompanyDTO;
-import com.introme.company.entity.Company;
+import com.introme.company.dto.request.CompanyReqDTO;
+import com.introme.company.dto.response.CompanyResDTO;
 import com.introme.talent.TalentService;
-import com.introme.talent.dto.TalentDTO;
-import com.introme.talent.entity.Talent;
+import com.introme.talent.dto.request.TalentReqDTO;
+import com.introme.talent.dto.response.TalentResDTO;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @OpenAPIDefinition(
         info = @Info(title = "기업별 인재상 리스트 API 명세서",
@@ -35,10 +36,11 @@ public class CompanyRestController {
             description = "기업 정보 데이터를 DB에 저장합니다.",
             tags = "DB 세팅"
     )
-    @PostMapping(value = "/company/save")
-    public ResponseEntity<Company> saveCompanyData(@RequestBody CompanyDTO companyDTO) {
-        var data = companyService.save(companyDTO);
-        return ResponseEntity.ok(data);
+    @PostMapping(value = "/company/save", produces = "application/json")
+    public ResponseEntity<CompanyResDTO> saveCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
+        var data = companyService.save(companyReqDTO);
+        var res = CompanyResDTO.toResponseDTO(data);
+        return ResponseEntity.ok(res);
     }
 
     @Operation(
@@ -47,9 +49,10 @@ public class CompanyRestController {
             tags = "DB 세팅"
     )
     @PostMapping(value = "/talent/save")
-    public ResponseEntity<Talent> saveTalentData(@RequestBody TalentDTO talentDTO) {
-        var data = talentService.save(talentDTO);
-        return ResponseEntity.ok(data);
+    public ResponseEntity<TalentResDTO> saveTalentData(@RequestBody TalentReqDTO talentReqDTO) {
+        var data = talentService.save(talentReqDTO);
+        var res = TalentResDTO.toResponseDTO(data);
+        return ResponseEntity.ok(res);
     }
 
     @Tag(name = "기업별 인재상 리스트 API")
@@ -60,9 +63,13 @@ public class CompanyRestController {
 
     )
     @GetMapping(value = "/company/list")
-    public ResponseEntity<List<Company>> getCompanyList() {
+    public ResponseEntity<List<CompanyResDTO>> getCompanyList() {
         var data = companyService.findAllCompany();
-        System.out.println(data);
-        return ResponseEntity.ok(data);
+
+        var res = data.stream()
+                .map(CompanyResDTO::toResponseDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(res);
     }
 }
