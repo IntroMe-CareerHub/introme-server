@@ -11,9 +11,9 @@ public class TalentResDTO {
     private Long id;
     @NonNull
     private String keyword;
-
     @NonNull
     private String description;
+
     @Builder
     public TalentResDTO(Long id, String keyword, String description) {
         this.id = id;

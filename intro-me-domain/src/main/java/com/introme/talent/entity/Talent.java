@@ -26,15 +26,8 @@ public class Talent {
     @JoinColumn(name = "companyId")
     private Company company;
 
-    public Talent(String keyword, String description, Company company) {
-        this.keyword = keyword;
-        this.description = description;
-        this.company = company;
-    }
-
     @Builder
-    public Talent(Long id, String keyword, String description, Company company) {
-        this.id = id;
+    public Talent(String keyword, String description, Company company) {
         this.keyword = keyword;
         this.description = description;
         this.company = company;

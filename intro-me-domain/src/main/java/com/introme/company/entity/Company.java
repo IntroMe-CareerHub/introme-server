@@ -5,8 +5,6 @@ import com.introme.company.dto.request.CompanyReqDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Map;
-
 @Getter
 @Setter
 @Entity

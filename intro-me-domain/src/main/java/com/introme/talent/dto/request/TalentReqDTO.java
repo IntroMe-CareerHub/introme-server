@@ -1,9 +1,7 @@
 package com.introme.talent.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
 @Getter
 public class TalentReqDTO {
