@@ -2,8 +2,10 @@ package com.introme.talent.dto.response;
 
 import com.introme.talent.entity.Talent;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NonNull;
 
+@Getter
 public class TalentResDTO {
     @NonNull
     private Long id;

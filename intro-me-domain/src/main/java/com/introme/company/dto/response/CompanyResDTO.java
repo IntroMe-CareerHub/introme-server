@@ -18,7 +18,8 @@ public class CompanyResDTO {
     private CompanyInfo information;
 
     @Builder
-    public CompanyResDTO(String name, String image, CompanyInfo information) {
+    public CompanyResDTO(Long id, String name, String image, CompanyInfo information) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.information = information;
@@ -26,6 +27,7 @@ public class CompanyResDTO {
 
     public static CompanyResDTO toResponseDTO(Company company) {
         return CompanyResDTO.builder()
+                .id(company.getId())
                 .name(company.getName())
                 .image(company.getImage())
                 .information(company.getInformation())

@@ -26,6 +26,12 @@ public class Talent {
     @JoinColumn(name = "companyId")
     private Company company;
 
+    public Talent(String keyword, String description, Company company) {
+        this.keyword = keyword;
+        this.description = description;
+        this.company = company;
+    }
+
     @Builder
     public Talent(Long id, String keyword, String description, Company company) {
         this.id = id;
@@ -36,7 +42,6 @@ public class Talent {
 
     public static Talent toEntity(TalentReqDTO talentReqDTO, Company company) {
         return Talent.builder()
-                .id(talentReqDTO.getId())
                 .keyword(talentReqDTO.getKeyword())
                 .description(talentReqDTO.getDescription())
                 .company(company)

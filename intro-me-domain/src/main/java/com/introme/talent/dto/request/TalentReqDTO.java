@@ -6,12 +6,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
-@Setter
-@AllArgsConstructor
 public class TalentReqDTO {
-    @NonNull
-    private Long id;
-
     @NonNull
     private String keyword;
 
