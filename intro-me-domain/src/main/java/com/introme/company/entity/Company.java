@@ -1,6 +1,7 @@
 package com.introme.company.entity;
 
 import com.introme.company.CompanyInfoJsonConverter;
+import com.introme.company.dto.request.CompanyAddReqDTO;
 import com.introme.company.dto.request.CompanyReqDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,7 +41,15 @@ public class Company {
         return Company.builder()
                 .name(companyReqDTO.getName())
                 .image(companyReqDTO.getImage())
-                .information(companyReqDTO.getInformation())
+                .information(companyReqDTO.getCompanyInfo())
+                .build();
+    }
+    @Builder
+    public static Company toEntity(CompanyAddReqDTO companyAddReqDTO) {
+        return Company.builder()
+                .name(companyAddReqDTO.getName())
+                .image(companyAddReqDTO.getImage())
+                .information(companyAddReqDTO.getCompanyInfo())
                 .build();
     }
 }
