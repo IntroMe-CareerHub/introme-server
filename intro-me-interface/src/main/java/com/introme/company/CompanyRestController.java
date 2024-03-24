@@ -1,7 +1,9 @@
 package com.introme.company;
 
 
+import com.introme.company.dto.request.CompanyAddReqDTO;
 import com.introme.company.dto.request.CompanyReqDTO;
+import com.introme.company.dto.response.CompanyAddResDTO;
 import com.introme.company.dto.response.CompanyResDTO;
 import com.introme.talent.TalentService;
 import com.introme.talent.dto.request.TalentReqDTO;
@@ -70,6 +72,30 @@ public class CompanyRestController {
                 .map(CompanyResDTO::toResponseDTO)
                 .collect(Collectors.toList());
 
+        return ResponseEntity.ok(res);
+    }
+
+    @Operation(
+            summary = "특정 기업 조회하기 API",
+            description = "특정 기업의 데이터를 조회합니다.",
+            tags = "기업별 인재상 리스트 API"
+
+    )
+    @GetMapping(value = "/company/talent/{companyId}")
+    public ResponseEntity<List<TalentResDTO>> getTalent(@PathVariable("companyId") Long companyId) {
+        var res = talentService.getTalentsByCompanyId(companyId);
+        return ResponseEntity.ok(res);
+    }
+
+    @Operation(
+            summary = "기업 인재상 등록하기 API",
+            description = "새로운 기업의 데이터를 등록합니다.",
+            tags = "기업 인재상 등록 API"
+
+    )
+    @PostMapping(value = "/company/add")
+    public ResponseEntity<CompanyAddResDTO> addCompanyTalents(@RequestBody CompanyAddReqDTO companyAddReqDTO) {
+        var res = companyService.addCompanyTalents(companyAddReqDTO);
         return ResponseEntity.ok(res);
     }
 }

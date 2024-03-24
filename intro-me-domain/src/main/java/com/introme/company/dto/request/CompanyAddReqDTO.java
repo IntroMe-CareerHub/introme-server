@@ -1,15 +1,17 @@
 package com.introme.company.dto.request;
 
 import com.introme.company.entity.CompanyInfo;
-import lombok.*;
+import com.introme.talent.entity.TalentInfo;
+import lombok.Getter;
+import lombok.NonNull;
+
+import java.util.List;
 
 @Getter
-public class CompanyReqDTO {
+public class CompanyAddReqDTO {
     @NonNull
     private String name;
-
-    @NonNull
     private String image;
-
     private CompanyInfo companyInfo;
+    private List<TalentInfo> talentInfo;
 }
