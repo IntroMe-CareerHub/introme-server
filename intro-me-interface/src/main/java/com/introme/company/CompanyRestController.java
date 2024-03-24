@@ -72,4 +72,16 @@ public class CompanyRestController {
 
         return ResponseEntity.ok(res);
     }
+
+    @Operation(
+            summary = "특정 기업 조회하기 API",
+            description = "특정 기업의 데이터를 조회합니다.",
+            tags = "기업별 인재상 리스트 API"
+
+    )
+    @GetMapping(value = "/company/talent/{companyId}")
+    public ResponseEntity<List<TalentResDTO>> getTalent(@PathVariable("companyId") Long companyId) {
+        var res = talentService.getTalentsByCompanyId(companyId);
+        return ResponseEntity.ok(res);
+    }
 }
