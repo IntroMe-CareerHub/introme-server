@@ -40,4 +40,12 @@ public class Talent {
                 .company(company)
                 .build();
     }
+
+    public static Talent toEntity(TalentInfo talentInfo, Company company) {
+        return Talent.builder()
+                .keyword(talentInfo.getKeyword())
+                .description(talentInfo.getDescription())
+                .company(company)
+                .build();
+    }
 }
