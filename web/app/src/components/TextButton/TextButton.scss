@@ -1,0 +1,17 @@
+@import "../../Global";
+
+.textButton {
+  font-size: 12px;
+  border: 0;
+  cursor: pointer;
+  font-weight: bold;
+  background: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
