@@ -1,13 +1,9 @@
 package com.introme.company;
 
 
-import com.introme.company.dto.request.CompanyAddReqDTO;
 import com.introme.company.dto.request.CompanyReqDTO;
-import com.introme.company.dto.response.CompanyAddResDTO;
 import com.introme.company.dto.response.CompanyResDTO;
-import com.introme.talent.TalentService;
-import com.introme.talent.dto.request.TalentReqDTO;
-import com.introme.talent.dto.response.TalentResDTO;
+import com.introme.company.dto.response.TempCompanyResDTO;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -30,15 +26,14 @@ import java.util.stream.Collectors;
 public class CompanyRestController {
 
     private final CompanyService companyService;
-    private final TalentService talentService;
 
     @Tag(name = "DB 세팅")
     @Operation(
-            summary = "Company 데이터 저장 API",
-            description = "기업 정보 데이터를 DB에 저장합니다.",
+            summary = "[Admin] 기업 인재상 데이터 저장 API",
+            description = "검토한 기업 정보 데이터를 DB에 저장합니다.",
             tags = "DB 세팅"
     )
-    @PostMapping(value = "/company/save", produces = "application/json")
+    @PostMapping(value = "/company/add", produces = "application/json")
     public ResponseEntity<CompanyResDTO> saveCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
         var data = companyService.save(companyReqDTO);
         var res = CompanyResDTO.toResponseDTO(data);
@@ -46,14 +41,15 @@ public class CompanyRestController {
     }
 
     @Operation(
-            summary = "Talent 데이터 저장하기 API",
-            description = "인재상 데이터를 DB에 저장합니다.",
+            summary = "[User] 기업 인재상 데이터 등록 요청 API",
+            description = "사용자가 입력한 기업 정보 데이터를 임시 DB 테이블에 저장합니다.",
             tags = "DB 세팅"
     )
-    @PostMapping(value = "/talent/save")
-    public ResponseEntity<TalentResDTO> saveTalentData(@RequestBody TalentReqDTO talentReqDTO) {
-        var data = talentService.save(talentReqDTO);
-        var res = TalentResDTO.toResponseDTO(data);
+    @PostMapping(value = "/company/submit", produces = "application/json")
+    public ResponseEntity<TempCompanyResDTO> submitCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
+        var data = companyService.submit(companyReqDTO);
+        var res = TempCompanyResDTO.toResponseDTO(data);
+        System.out.println(res);
         return ResponseEntity.ok(res);
     }
 
@@ -76,26 +72,14 @@ public class CompanyRestController {
     }
 
     @Operation(
-            summary = "특정 기업 조회하기 API",
-            description = "특정 기업의 데이터를 조회합니다.",
+            summary = "기업 인재상 조회하기 API",
+            description = "특정 기업의 인재상 데이터를 조회합니다.",
             tags = "기업별 인재상 리스트 API"
 
     )
     @GetMapping(value = "/company/talent/{companyId}")
-    public ResponseEntity<List<TalentResDTO>> getTalent(@PathVariable("companyId") Long companyId) {
-        var res = talentService.getTalentsByCompanyId(companyId);
-        return ResponseEntity.ok(res);
-    }
-
-    @Operation(
-            summary = "기업 인재상 등록하기 API",
-            description = "새로운 기업의 데이터를 등록합니다.",
-            tags = "기업 인재상 등록 API"
-
-    )
-    @PostMapping(value = "/company/add")
-    public ResponseEntity<CompanyAddResDTO> addCompanyTalents(@RequestBody CompanyAddReqDTO companyAddReqDTO) {
-        var res = companyService.addCompanyTalents(companyAddReqDTO);
+    public ResponseEntity<CompanyResDTO> getTalent(@PathVariable("companyId") Long companyId) {
+        var res = companyService.findCompanyData(companyId);
         return ResponseEntity.ok(res);
     }
 }

@@ -21,31 +21,29 @@ public class Talent {
     private String keyword;
 
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "companyId")
-    private Company company;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "companyId")
+//    private Company company;
 
     @Builder
-    public Talent(String keyword, String description, Company company) {
+    public Talent(String keyword, String description) {
         this.keyword = keyword;
         this.description = description;
-        this.company = company;
+//        this.company = company;
     }
 
-    public static Talent toEntity(TalentReqDTO talentReqDTO, Company company) {
+//    public static Talent toEntity(TalentReqDTO talentReqDTO) {
+//        return Talent.builder()
+//                .keyword(talentReqDTO.getKeyword())
+//                .description(talentReqDTO.getDescription())
+//                .build();
+//    }
+
+    public static Talent toEntity(TalentReqDTO talentReqDTO) {
         return Talent.builder()
                 .keyword(talentReqDTO.getKeyword())
                 .description(talentReqDTO.getDescription())
-                .company(company)
-                .build();
-    }
-
-    public static Talent toEntity(TalentInfo talentInfo, Company company) {
-        return Talent.builder()
-                .keyword(talentInfo.getKeyword())
-                .description(talentInfo.getDescription())
-                .company(company)
                 .build();
     }
 }

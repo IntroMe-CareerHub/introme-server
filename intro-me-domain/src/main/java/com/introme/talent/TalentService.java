@@ -17,14 +17,14 @@ public class TalentService {
     private TalentRepository talentRepository;
     private final CompanyRepository companyRepository;
 
-    public Talent save(TalentReqDTO talentReqDTO) {
-        Company company = companyRepository.findById(talentReqDTO.getCompanyId())
-                .orElseThrow(() -> new IllegalArgumentException("Company not found with this id:" + talentReqDTO.getCompanyId()));
+//    public Talent save(TalentReqDTO talentReqDTO) {
+//        Company company = companyRepository.findById(talentReqDTO.getCompanyId())
+//                .orElseThrow(() -> new IllegalArgumentException("Company not found with this id:" + talentReqDTO.getCompanyId()));
+//
+//        return talentRepository.save(Talent.toEntity(talentReqDTO, company));
+//    }
 
-        return talentRepository.save(Talent.toEntity(talentReqDTO, company));
-    }
-
-    public List<TalentResDTO> getTalentsByCompanyId(Long companyId) {
-        return talentRepository.findByCompanyId(companyId);
-    }
+//    public List<TalentResDTO> getTalentsByCompanyId(Long companyId) {
+//        return talentRepository.findByCompanyId(companyId);
+//    }
 }
