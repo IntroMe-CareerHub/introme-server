@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface TalentRepository extends JpaRepository<Talent, Long> {
-    List<TalentResDTO> findByCompanyId(Long companyId);
 }
