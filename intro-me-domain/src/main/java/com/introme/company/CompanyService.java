@@ -6,9 +6,6 @@ import com.introme.company.entity.Company;
 import com.introme.company.entity.TempCompany;
 import com.introme.company.repository.CompanyRepository;
 import com.introme.company.repository.TempCompanyRepository;
-import com.introme.talent.dto.response.TalentResDTO;
-import com.introme.talent.entity.Talent;
-import com.introme.talent.repository.TalentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,23 +31,14 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-//    public List<TalentResDTO> findCompanyTalents(Long companyId) {
-//        List<Talent> talentList;
-//        Company company = companyRepository.findById(companyId).orElse(null);
-//        if (company != null) {
-//            talentList = company.getTalents();
-//            System.out.println(talentList);
-//
-//            return talentList.stream()
-//                    .map(TalentResDTO::toResponseDTO)
-//                    .toList();
-//        }
-//        log.error("---> Company data is a null value.");
-//        return null;
-//    }
-
     public CompanyResDTO findCompanyData(Long companyId) {
         return CompanyResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
+    }
+
+    public List<CompanyResDTO> findCompanyByKeyword(String keyword) {
+        return companyRepository.findByNameContaining(keyword).stream()
+                .map(CompanyResDTO::toResponseDTO)
+                .toList();
     }
 }
 

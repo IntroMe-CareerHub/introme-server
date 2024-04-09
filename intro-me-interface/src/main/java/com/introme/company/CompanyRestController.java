@@ -82,4 +82,16 @@ public class CompanyRestController {
         var res = companyService.findCompanyData(companyId);
         return ResponseEntity.ok(res);
     }
+
+    @Operation(
+            summary = "기업 검색하기 API",
+            description = "특정 기업을 검색합니다.",
+            tags = "기업별 인재상 리스트 API"
+    )
+    @GetMapping(value = "/company/search")
+    public ResponseEntity<List<CompanyResDTO>> search(@RequestParam String keyword) {
+        var res = companyService.findCompanyByKeyword(keyword);
+        return ResponseEntity.ok(res);
+    }
+
 }
