@@ -24,28 +24,29 @@ public class Company {
 
     @Convert(converter = CompanyInfoJsonConverter.class)
     @Column
-    private CompanyInfo information;
+    private CompanyInfo companyInfo;
 
-    private int approved;
+    @Enumerated(EnumType.STRING)
+    private Permission permission;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "companyId")
     private List<Talent> talents = new ArrayList<>();
 
-    public Company(String name, String image, CompanyInfo information, int approved) {
+    public Company(String name, String image, CompanyInfo companyInfo, Permission permission) {
         this.name = name;
         this.image = image;
-        this.information = information;
-        this.approved = approved;
+        this.companyInfo = companyInfo;
+        this.permission = permission;
     }
 
     @Builder
-    public Company(Long id, String name, String image, CompanyInfo information, int approved, List<Talent> talents) {
+    public Company(Long id, String name, String image, CompanyInfo companyInfo, Permission permission, List<Talent> talents) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.information = information;
-        this.approved = approved;
+        this.companyInfo = companyInfo;
+        this.permission = permission;
         this.talents = talents;
     }
 
@@ -57,8 +58,8 @@ public class Company {
         return Company.builder()
                 .name(companyReqDTO.getName())
                 .image(companyReqDTO.getImage())
-                .information(companyReqDTO.getInformation())
-                .approved(1)
+                .companyInfo(companyReqDTO.getCompanyInfo())
+                .permission(Permission.APPROVED)
                 .talents(talentList)
                 .build();
     }
@@ -71,10 +72,9 @@ public class Company {
         return Company.builder()
                 .name(companyReqDTO.getName())
                 .image(companyReqDTO.getImage())
-                .information(companyReqDTO.getInformation())
-                .approved(0)
+                .companyInfo(companyReqDTO.getCompanyInfo())
+                .permission(Permission.PENDING)
                 .talents(talentList)
                 .build();
-
     }
 }

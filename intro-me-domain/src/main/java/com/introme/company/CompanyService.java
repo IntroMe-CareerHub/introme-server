@@ -3,6 +3,7 @@ package com.introme.company;
 import com.introme.company.dto.request.CompanyReqDTO;
 import com.introme.company.dto.response.CompanyResDTO;
 import com.introme.company.entity.Company;
+import com.introme.company.entity.Permission;
 import com.introme.company.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class CompanyService {
 
     public List<Company> findAllCompany() {
         // find only approved company data
-        return companyRepository.findByapproved(1);
+        return companyRepository.findByPermission(Permission.APPROVED);
     }
 
     public CompanyResDTO findCompanyData(Long companyId) {

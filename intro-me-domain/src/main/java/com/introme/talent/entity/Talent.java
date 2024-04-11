@@ -1,6 +1,5 @@
 package com.introme.talent.entity;
 
-import com.introme.company.entity.Company;
 import com.introme.talent.dto.request.TalentReqDTO;
 import jakarta.persistence.*;
 import lombok.Builder;

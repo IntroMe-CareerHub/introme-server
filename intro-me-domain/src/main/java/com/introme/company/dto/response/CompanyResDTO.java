@@ -18,16 +18,16 @@ public class CompanyResDTO {
     @NonNull
     private String image;
 
-    private CompanyInfo information;
+    private CompanyInfo companyInfo;
 
     private List<Talent> talents;
 
     @Builder
-    public CompanyResDTO(Long id, String name, String image, CompanyInfo information, List<Talent> talents) {
+    public CompanyResDTO(Long id, String name, String image, CompanyInfo companyInfo, List<Talent> talents) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.information = information;
+        this.companyInfo = companyInfo;
         this.talents = talents;
     }
 
@@ -36,7 +36,7 @@ public class CompanyResDTO {
                 .id(company.getId())
                 .name(company.getName())
                 .image(company.getImage())
-                .information(company.getInformation())
+                .companyInfo(company.getCompanyInfo())
                 .talents(company.getTalents())
                 .build();
     }
