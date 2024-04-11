@@ -2,7 +2,6 @@ package com.introme.company.dto.response;
 
 import com.introme.company.entity.Company;
 import com.introme.company.entity.CompanyInfo;
-import com.introme.company.entity.TempCompany;
 import com.introme.talent.entity.Talent;
 import lombok.*;
 

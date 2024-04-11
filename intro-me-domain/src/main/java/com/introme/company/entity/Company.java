@@ -26,22 +26,26 @@ public class Company {
     @Column
     private CompanyInfo information;
 
+    private int approved;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "companyId")
     private List<Talent> talents = new ArrayList<>();
 
-    public Company(String name, String image, CompanyInfo information) {
+    public Company(String name, String image, CompanyInfo information, int approved) {
         this.name = name;
         this.image = image;
         this.information = information;
+        this.approved = approved;
     }
 
     @Builder
-    public Company(Long id, String name, String image, CompanyInfo information, List<Talent> talents) {
+    public Company(Long id, String name, String image, CompanyInfo information, int approved, List<Talent> talents) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.information = information;
+        this.approved = approved;
         this.talents = talents;
     }
 
@@ -54,7 +58,23 @@ public class Company {
                 .name(companyReqDTO.getName())
                 .image(companyReqDTO.getImage())
                 .information(companyReqDTO.getInformation())
+                .approved(1)
                 .talents(talentList)
                 .build();
+    }
+
+    public static Company toTempEntity(CompanyReqDTO companyReqDTO) {
+        List<Talent> talentList = companyReqDTO.getTalents().stream()
+                .map(Talent::toEntity)
+                .toList();
+
+        return Company.builder()
+                .name(companyReqDTO.getName())
+                .image(companyReqDTO.getImage())
+                .information(companyReqDTO.getInformation())
+                .approved(0)
+                .talents(talentList)
+                .build();
+
     }
 }

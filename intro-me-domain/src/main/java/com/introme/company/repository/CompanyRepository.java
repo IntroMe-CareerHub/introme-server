@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     List<Company> findByNameContaining(String keyword);
+
+    List<Company> findByapproved(int num);
 }
