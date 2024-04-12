@@ -7,9 +7,5 @@ import lombok.NonNull;
 public class TalentReqDTO {
     @NonNull
     private String keyword;
-
     private String description;
-
-    @NonNull
-    private Long companyId;
 }
