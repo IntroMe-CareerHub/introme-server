@@ -1,5 +1,6 @@
 plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'com.google.cloud.tools.jib'
 }
 
 dependencies {
@@ -18,3 +19,19 @@ tasks.named('asciidoctor') {
 }
 
 tasks.register("prepareKotlinBuildScriptModel"){}
+
+
+jib {
+    from {
+        image = "eclipse-temurin:17-jdk-alpine"
+    }
+    to {
+        image = 'oo9699/intro-me-server'
+        tags = ["latest"]
+
+    }
+    container {
+        ports =["8080"]
+        creationTime = "USE_CURRENT_TIMESTAMP"
+    }
+}
