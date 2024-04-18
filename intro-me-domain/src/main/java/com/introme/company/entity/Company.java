@@ -6,6 +6,8 @@ import com.introme.talent.entity.Talent;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
+@DynamicInsert
+@DynamicUpdate
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
