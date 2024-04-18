@@ -7,6 +7,8 @@ import com.introme.company.entity.Permission;
 import com.introme.company.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +27,10 @@ public class CompanyService {
         return companyRepository.save(Company.toTempEntity(companyReqDTO));
     }
 
-    public List<Company> findAllCompany() {
+    public Page<Company> findAllCompany(int page, int size) {
         // find only approved company data
-        return companyRepository.findByPermission(Permission.APPROVED);
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return companyRepository.findAllByPermission(Permission.APPROVED, pageRequest);
     }
 
     public CompanyResDTO findCompanyData(Long companyId) {

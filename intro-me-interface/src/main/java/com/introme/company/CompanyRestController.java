@@ -2,12 +2,18 @@ package com.introme.company;
 
 
 import com.introme.company.dto.request.CompanyReqDTO;
+import com.introme.company.dto.response.CompanyListResDTO;
+import com.introme.company.dto.response.CompanyPageDTO;
 import com.introme.company.dto.response.CompanyResDTO;
+import com.introme.company.entity.Company;
+import com.introme.company.entity.PageInfo;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +23,8 @@ import java.util.stream.Collectors;
 @OpenAPIDefinition(
         info = @Info(title = "기업별 인재상 리스트 API 명세서",
                 version = "v1"
-            )
         )
+)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
@@ -55,17 +61,21 @@ public class CompanyRestController {
     @Tag(name = "기업별 인재상 리스트 API")
     @Operation(
             summary = "전체 기업 조회하기 API",
-            description = "전체 기업의 데이터를 조회합니다.",
+            description = "전체 기업의 데이터를 페이지별로 나누어 조회합니다.",
             tags = "기업별 인재상 리스트 API"
 
     )
     @GetMapping(value = "/company/list")
-    public ResponseEntity<List<CompanyResDTO>> getCompanyList() {
-        var data = companyService.findAllCompany();
+    public ResponseEntity<CompanyPageDTO<List<CompanyListResDTO>>> getCompanyList(@Positive @RequestParam int page, @Positive @RequestParam int size) {
+        Page<Company> companyPage = companyService.findAllCompany(page - 1, size);
+        PageInfo pageInfo = new PageInfo(page, size, (int) companyPage.getTotalElements(), companyPage.getTotalPages());
 
-        var res = data.stream()
-                .map(CompanyResDTO::toResponseDTO)
-                .collect(Collectors.toList());
+        List<Company> companyList = companyPage.getContent();
+        List<CompanyListResDTO> companyListResDTOList = companyList.stream()
+                .map(CompanyListResDTO::toResponseDTO)
+                .toList();
+
+        CompanyPageDTO<List<CompanyListResDTO>> res = new CompanyPageDTO<>(companyListResDTOList, pageInfo);
 
         return ResponseEntity.ok(res);
     }
