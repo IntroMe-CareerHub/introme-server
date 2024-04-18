@@ -1,10 +1,14 @@
 package com.introme.company;
 
 import com.introme.company.dto.request.CompanyReqDTO;
+import com.introme.company.dto.response.CompanyListResDTO;
 import com.introme.company.dto.response.CompanyResDTO;
+import com.introme.company.dto.response.SubmitCompanyResDTO;
 import com.introme.company.entity.Company;
 import com.introme.company.entity.Permission;
 import com.introme.company.repository.CompanyRepository;
+import com.introme.talent.dto.request.TalentReqDTO;
+import com.introme.talent.entity.Talent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -37,10 +41,19 @@ public class CompanyService {
         return CompanyResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
     }
 
-    public List<CompanyResDTO> findCompanyByKeyword(String keyword) {
+    public List<CompanyListResDTO> findCompanyByKeyword(String keyword) {
         return companyRepository.findByNameContaining(keyword).stream()
-                .map(CompanyResDTO::toResponseDTO)
+                .map(CompanyListResDTO::toResponseDTO)
                 .toList();
+    }
+
+    public SubmitCompanyResDTO submitTalent(Long companyId, TalentReqDTO talentReqDTO) {
+        Talent talent = Talent.toEntity(talentReqDTO);
+        Company company = companyRepository.findById(companyId).orElseThrow();
+        company.getTalents().add(talent);
+        companyRepository.save(company);
+
+        return SubmitCompanyResDTO.toResponseDTO(company);
     }
 }
 

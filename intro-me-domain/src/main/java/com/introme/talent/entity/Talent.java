@@ -40,6 +40,7 @@ public class Talent {
                 .keyword(talentReqDTO.getKeyword())
                 .description(talentReqDTO.getDescription())
                 .baseUrl(talentReqDTO.getBaseUrl())
+                .permission(Permission.PENDING)
                 .build();
     }
 }
