@@ -5,7 +5,9 @@ import com.introme.company.dto.request.CompanyReqDTO;
 import com.introme.talent.entity.Talent;
 import jakarta.persistence.*;
 import lombok.*;
-
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +24,18 @@ public class Company {
     @Column
     private String image;
 
+    @ColumnDefault("'#EEEEEE'")
+    private String backgroundColor;
+
     @Convert(converter = CompanyInfoJsonConverter.class)
     @Column
     private CompanyInfo companyInfo;
 
     @Enumerated(EnumType.STRING)
     private Permission permission;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "companyId")

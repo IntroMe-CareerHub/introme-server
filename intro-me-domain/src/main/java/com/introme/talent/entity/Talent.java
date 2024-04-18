@@ -1,11 +1,9 @@
 package com.introme.talent.entity;
 
+import com.introme.company.entity.Permission;
 import com.introme.talent.dto.request.TalentReqDTO;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -21,16 +19,27 @@ public class Talent {
 
     private String description;
 
+    private String icon;
+
+    @Enumerated(EnumType.STRING)
+    private Permission permission;
+
+    private String baseUrl;
+
     @Builder
-    public Talent(String keyword, String description) {
+    public Talent(String keyword, String description, String icon, Permission permission, String baseUrl) {
         this.keyword = keyword;
         this.description = description;
+        this.icon = icon;
+        this.permission = permission;
+        this.baseUrl = baseUrl;
     }
 
     public static Talent toEntity(TalentReqDTO talentReqDTO) {
         return Talent.builder()
                 .keyword(talentReqDTO.getKeyword())
                 .description(talentReqDTO.getDescription())
+                .baseUrl(talentReqDTO.getBaseUrl())
                 .build();
     }
 }
