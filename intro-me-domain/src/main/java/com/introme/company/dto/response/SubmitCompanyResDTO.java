@@ -46,4 +46,6 @@ public class SubmitCompanyResDTO {
                 .talents(company.getTalents())
                 .build();
     }
+
+
 }

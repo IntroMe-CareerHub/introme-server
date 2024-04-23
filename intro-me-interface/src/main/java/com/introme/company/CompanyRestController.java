@@ -2,19 +2,17 @@ package com.introme.company;
 
 
 import com.introme.company.dto.request.CompanyReqDTO;
+import com.introme.company.dto.request.SubmitCompanyReqDTO;
 import com.introme.company.dto.response.AllCompaniesResDTO;
 import com.introme.company.dto.response.CompanyPageDTO;
 import com.introme.company.dto.response.CompanyDetailResDTO;
 import com.introme.company.dto.response.SubmitCompanyResDTO;
-import com.introme.company.entity.Company;
-import com.introme.company.entity.PageInfo;
 import com.introme.talent.dto.request.TalentReqDTO;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -44,9 +42,9 @@ public class CompanyRestController {
     )
     @PostMapping(value = "/company/add", produces = "application/json")
     public ResponseEntity<CompanyDetailResDTO> saveCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
-        var data = companyService.save(companyReqDTO);
-        var res = CompanyDetailResDTO.toResponseDTO(data);
-        return ResponseEntity.ok(res);
+        var company = companyService.save(companyReqDTO);
+        var data = CompanyDetailResDTO.toResponseDTO(company);
+        return ResponseEntity.ok(data);
     }
 
     @Operation(
@@ -55,11 +53,11 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @PostMapping(value = "/company/submit", produces = "application/json")
-    public ResponseEntity<SubmitCompanyResDTO> submitCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
-        var data = companyService.submit(companyReqDTO);
-        var res = SubmitCompanyResDTO.toResponseDTO(data);
+    public ResponseEntity<SubmitCompanyResDTO> submitCompanyData(@RequestBody SubmitCompanyReqDTO submitCompanyReqDTO) {
+        var company = companyService.submit(submitCompanyReqDTO);
+        var data = SubmitCompanyResDTO.toResponseDTO(company);
 
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(data);
     }
 
     @Operation(
@@ -69,17 +67,9 @@ public class CompanyRestController {
     )
     @GetMapping(value = "/company/list")
     public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<Company> companyPage = companyService.findAllCompany(pageable);
-        PageInfo pageInfo = new PageInfo(companyPage.getNumber() + 1, companyPage.getSize(), (int) companyPage.getTotalElements(), companyPage.getTotalPages());
+        CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findAllCompany(pageable);
 
-        List<Company> companyList = companyPage.getContent();
-        List<AllCompaniesResDTO> allCompanies = companyList.stream()
-                .map(AllCompaniesResDTO::toResponseDTO)
-                .toList();
-
-        CompanyPageDTO<List<AllCompaniesResDTO>> res = new CompanyPageDTO<>(allCompanies, pageInfo);
-
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(data);
     }
 
     @Operation(
@@ -100,9 +90,10 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @GetMapping(value = "/company/search")
-    public ResponseEntity<List<AllCompaniesResDTO>> search(@RequestParam String keyword) {
-        var res = companyService.findCompanyByKeyword(keyword);
-        return ResponseEntity.ok(res);
+    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> search(@RequestParam String keyword, @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findCompanyByKeyword(keyword, pageable);
+
+        return ResponseEntity.ok(data);
     }
 
     @Operation(
