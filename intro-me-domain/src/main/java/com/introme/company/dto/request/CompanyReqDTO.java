@@ -15,6 +15,9 @@ public class CompanyReqDTO {
     @NotNull
     private String image;
 
+    @NotNull
+    private String identityColor;
+
     private CompanyInfo companyInfo;
 
     private List<TalentReqDTO> talents;

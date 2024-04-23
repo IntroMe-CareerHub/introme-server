@@ -23,6 +23,7 @@ public class DataRunner implements ApplicationRunner {
         Company company = new Company();
         company.setName("카카오");
         company.setImage(".icon");
+        company.setIdentityColor("#YELDSM");
         company.setCompanyInfo(companyInfo);
         company.setPermission(Permission.APPROVED);
         Talent talent = new Talent("고객중심", "고객이 원하는 최고의 경험을 만든다.", "icon.png", Permission.APPROVED, "");
@@ -30,12 +31,12 @@ public class DataRunner implements ApplicationRunner {
 
 
         CompanyInfo companyInfo2 = new CompanyInfo("서울특별시 강남구", "www.naver.com", "www.recruit.com", "www.tech.com");
-        Company company2 = new Company("신한은행", ".icon", companyInfo2, Permission.APPROVED);
+        Company company2 = new Company("신한은행", ".icon", "#CSMSMD", companyInfo2, Permission.APPROVED);
         Talent talent2 = new Talent("주도적 몰입", "자율과 책임에 기반하여 성과를 낸다.", "icon.png", Permission.APPROVED, "");
         company2.getTalents().add(talent2);
 
         CompanyInfo companyInfo3 = new CompanyInfo("서울특별시 강남구", "www.naver.com", "www.recruit.com", "www.tech.com");
-        Company company3 = new Company("네이버", ".icon", companyInfo3, Permission.APPROVED);
+        Company company3 = new Company("네이버", ".icon", "#EEEEEE", companyInfo3, Permission.APPROVED);
         Talent talent3 = new Talent("대담한 도전", "현재에 만족하지 않고 도전한다.", "icon.png", Permission.APPROVED, "");
         company3.getTalents().add(talent3);
 
