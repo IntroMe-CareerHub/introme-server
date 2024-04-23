@@ -2,9 +2,9 @@ package com.introme.company;
 
 
 import com.introme.company.dto.request.CompanyReqDTO;
-import com.introme.company.dto.response.CompanyListResDTO;
+import com.introme.company.dto.response.AllCompaniesResDTO;
 import com.introme.company.dto.response.CompanyPageDTO;
-import com.introme.company.dto.response.CompanyResDTO;
+import com.introme.company.dto.response.CompanyDetailResDTO;
 import com.introme.company.dto.response.SubmitCompanyResDTO;
 import com.introme.company.entity.Company;
 import com.introme.company.entity.PageInfo;
@@ -43,9 +43,9 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @PostMapping(value = "/company/add", produces = "application/json")
-    public ResponseEntity<CompanyResDTO> saveCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
+    public ResponseEntity<CompanyDetailResDTO> saveCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
         var data = companyService.save(companyReqDTO);
-        var res = CompanyResDTO.toResponseDTO(data);
+        var res = CompanyDetailResDTO.toResponseDTO(data);
         return ResponseEntity.ok(res);
     }
 
@@ -68,16 +68,16 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @GetMapping(value = "/company/list")
-    public ResponseEntity<CompanyPageDTO<List<CompanyListResDTO>>> getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Company> companyPage = companyService.findAllCompany(pageable);
         PageInfo pageInfo = new PageInfo(companyPage.getNumber() + 1, companyPage.getSize(), (int) companyPage.getTotalElements(), companyPage.getTotalPages());
 
         List<Company> companyList = companyPage.getContent();
-        List<CompanyListResDTO> companyListResDTOList = companyList.stream()
-                .map(CompanyListResDTO::toResponseDTO)
+        List<AllCompaniesResDTO> allCompanies = companyList.stream()
+                .map(AllCompaniesResDTO::toResponseDTO)
                 .toList();
 
-        CompanyPageDTO<List<CompanyListResDTO>> res = new CompanyPageDTO<>(companyListResDTOList, pageInfo);
+        CompanyPageDTO<List<AllCompaniesResDTO>> res = new CompanyPageDTO<>(allCompanies, pageInfo);
 
         return ResponseEntity.ok(res);
     }
@@ -89,7 +89,7 @@ public class CompanyRestController {
 
     )
     @GetMapping(value = "/company/talent/{companyId}")
-    public ResponseEntity<CompanyResDTO> getTalent(@PathVariable("companyId") Long companyId) {
+    public ResponseEntity<CompanyDetailResDTO> getTalent(@PathVariable("companyId") Long companyId) {
         var res = companyService.findCompanyData(companyId);
         return ResponseEntity.ok(res);
     }
@@ -100,7 +100,7 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @GetMapping(value = "/company/search")
-    public ResponseEntity<List<CompanyListResDTO>> search(@RequestParam String keyword) {
+    public ResponseEntity<List<AllCompaniesResDTO>> search(@RequestParam String keyword) {
         var res = companyService.findCompanyByKeyword(keyword);
         return ResponseEntity.ok(res);
     }

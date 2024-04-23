@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-public class CompanyResDTO {
+public class CompanyDetailResDTO {
     @NotNull
     private Long id;
 
@@ -31,7 +31,7 @@ public class CompanyResDTO {
     private List<Talent> talents;
 
     @Builder
-    public CompanyResDTO(Long id, String name, String image, String backgroundColor, CompanyInfo companyInfo, List<Talent> talents, LocalDateTime updatedAt) {
+    public CompanyDetailResDTO(Long id, String name, String image, String backgroundColor, CompanyInfo companyInfo, List<Talent> talents, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -41,13 +41,13 @@ public class CompanyResDTO {
         this.updatedAt = updatedAt;
     }
 
-    public static CompanyResDTO toResponseDTO(Company company) {
+    public static CompanyDetailResDTO toResponseDTO(Company company) {
         List<Talent> talentList = company.getTalents().stream()
                 .filter(talent -> talent.getPermission() == Permission.APPROVED)
                 .toList();
 
 
-        return CompanyResDTO.builder()
+        return CompanyDetailResDTO.builder()
                 .id(company.getId())
                 .name(company.getName())
                 .image(company.getImage())

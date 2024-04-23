@@ -10,7 +10,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class CompanyListResDTO {
+public class AllCompaniesResDTO {
     @NotNull
     private Long id;
 
@@ -27,7 +27,7 @@ public class CompanyListResDTO {
 
 
     @Builder
-    public CompanyListResDTO(Long id, String name, String image, String location, String url, List<TalentResDTO> talents) {
+    public AllCompaniesResDTO(Long id, String name, String image, String location, String url, List<TalentResDTO> talents) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -37,13 +37,13 @@ public class CompanyListResDTO {
     }
 
 
-    public static CompanyListResDTO toResponseDTO(Company company) {
+    public static AllCompaniesResDTO toResponseDTO(Company company) {
         List<TalentResDTO> talentResDTOS = company.getTalents().stream()
                 .filter(talent -> talent.getPermission() == Permission.APPROVED)
                 .map(TalentResDTO::toResponseDTO)
                 .toList();
 
-        return CompanyListResDTO.builder()
+        return AllCompaniesResDTO.builder()
                 .id(company.getId())
                 .name(company.getName())
                 .image(company.getImage())

@@ -1,8 +1,8 @@
 package com.introme.company;
 
 import com.introme.company.dto.request.CompanyReqDTO;
-import com.introme.company.dto.response.CompanyListResDTO;
-import com.introme.company.dto.response.CompanyResDTO;
+import com.introme.company.dto.response.AllCompaniesResDTO;
+import com.introme.company.dto.response.CompanyDetailResDTO;
 import com.introme.company.dto.response.SubmitCompanyResDTO;
 import com.introme.company.entity.Company;
 import com.introme.company.entity.Permission;
@@ -35,13 +35,13 @@ public class CompanyService {
         return companyRepository.findAllByPermission(Permission.APPROVED, pageable);
     }
 
-    public CompanyResDTO findCompanyData(Long companyId) {
-        return CompanyResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
+    public CompanyDetailResDTO findCompanyData(Long companyId) {
+        return CompanyDetailResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
     }
 
-    public List<CompanyListResDTO> findCompanyByKeyword(String keyword) {
+    public List<AllCompaniesResDTO> findCompanyByKeyword(String keyword) {
         return companyRepository.findByNameContaining(keyword).stream()
-                .map(CompanyListResDTO::toResponseDTO)
+                .map(AllCompaniesResDTO::toResponseDTO)
                 .toList();
     }
 
