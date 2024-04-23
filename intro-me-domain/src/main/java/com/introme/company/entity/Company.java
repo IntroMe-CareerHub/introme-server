@@ -50,10 +50,11 @@ public class Company {
     }
 
     @Builder
-    public Company(Long id, String name, String image, CompanyInfo companyInfo, Permission permission, List<Talent> talents) {
+    public Company(Long id, String name, String image, String identityColor, CompanyInfo companyInfo, Permission permission, List<Talent> talents) {
         this.id = id;
         this.name = name;
         this.image = image;
+        this.identityColor = identityColor;
         this.companyInfo = companyInfo;
         this.permission = permission;
         this.talents = talents;
@@ -67,6 +68,7 @@ public class Company {
         return Company.builder()
                 .name(companyReqDTO.getName())
                 .image(companyReqDTO.getImage())
+                .identityColor(companyReqDTO.getIdentityColor())
                 .companyInfo(companyReqDTO.getCompanyInfo())
                 .permission(Permission.APPROVED)
                 .talents(talentList)
@@ -82,6 +84,7 @@ public class Company {
                 .name(submitCompanyReqDTO.getName())
                 .image(submitCompanyReqDTO.getImage())
                 .companyInfo(submitCompanyReqDTO.getCompanyInfo())
+                .identityColor("#EEEEEE")
                 .permission(Permission.PENDING)
                 .talents(talentList)
                 .build();
