@@ -13,11 +13,14 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @OpenAPIDefinition(
@@ -65,9 +68,9 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @GetMapping(value = "/company/list")
-    public ResponseEntity<CompanyPageDTO<List<CompanyListResDTO>>> getCompanyList(@Positive @RequestParam int page, @Positive @RequestParam int size) {
-        Page<Company> companyPage = companyService.findAllCompany(page - 1, size);
-        PageInfo pageInfo = new PageInfo(page, size, (int) companyPage.getTotalElements(), companyPage.getTotalPages());
+    public ResponseEntity<CompanyPageDTO<List<CompanyListResDTO>>> getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<Company> companyPage = companyService.findAllCompany(pageable);
+        PageInfo pageInfo = new PageInfo(companyPage.getNumber() + 1, companyPage.getSize(), (int) companyPage.getTotalElements(), companyPage.getTotalPages());
 
         List<Company> companyList = companyPage.getContent();
         List<CompanyListResDTO> companyListResDTOList = companyList.stream()

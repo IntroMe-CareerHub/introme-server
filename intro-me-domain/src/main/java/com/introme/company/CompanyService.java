@@ -12,7 +12,7 @@ import com.introme.talent.entity.Talent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,10 +31,8 @@ public class CompanyService {
         return companyRepository.save(Company.toTempEntity(companyReqDTO));
     }
 
-    public Page<Company> findAllCompany(int page, int size) {
-        // find only approved company data
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return companyRepository.findAllByPermission(Permission.APPROVED, pageRequest);
+    public Page<Company> findAllCompany(Pageable pageable) {
+        return companyRepository.findAllByPermission(Permission.APPROVED, pageable);
     }
 
     public CompanyResDTO findCompanyData(Long companyId) {
