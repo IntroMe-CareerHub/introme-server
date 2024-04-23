@@ -22,7 +22,7 @@ public class CompanyDetailResDTO {
     private String image;
 
     @NotNull
-    private String backgroundColor;
+    private String identityColor;
 
     private CompanyInfo companyInfo;
 
@@ -31,11 +31,11 @@ public class CompanyDetailResDTO {
     private List<Talent> talents;
 
     @Builder
-    public CompanyDetailResDTO(Long id, String name, String image, String backgroundColor, CompanyInfo companyInfo, List<Talent> talents, LocalDateTime updatedAt) {
+    public CompanyDetailResDTO(Long id, String name, String image, String identityColor, CompanyInfo companyInfo, List<Talent> talents, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.backgroundColor = backgroundColor;
+        this.identityColor = identityColor;
         this.companyInfo = companyInfo;
         this.talents = talents;
         this.updatedAt = updatedAt;
@@ -51,7 +51,7 @@ public class CompanyDetailResDTO {
                 .id(company.getId())
                 .name(company.getName())
                 .image(company.getImage())
-                .backgroundColor(company.getBackgroundColor())
+                .identityColor(company.getIdentityColor())
                 .companyInfo(company.getCompanyInfo())
                 .talents(talentList)
                 .updatedAt(company.getUpdatedAt())

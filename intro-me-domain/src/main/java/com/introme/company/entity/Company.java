@@ -29,7 +29,7 @@ public class Company {
     private String image;
 
     @ColumnDefault("'#EEEEEE'")
-    private String backgroundColor;
+    private String identityColor;
 
     @Convert(converter = CompanyInfoJsonConverter.class)
     @Column
