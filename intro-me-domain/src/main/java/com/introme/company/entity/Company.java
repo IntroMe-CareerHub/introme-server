@@ -82,7 +82,7 @@ public class Company {
 
         return Company.builder()
                 .name(submitCompanyReqDTO.getName())
-                .image(submitCompanyReqDTO.getImage())
+                .image("")
                 .companyInfo(submitCompanyReqDTO.getCompanyInfo())
                 .identityColor("#EEEEEE")
                 .permission(Permission.PENDING)

@@ -12,9 +12,6 @@ public class SubmitCompanyReqDTO {
     @NotNull
     private String name;
 
-    @NotNull
-    private String image;
-
     private CompanyInfo companyInfo;
 
     private List<TalentReqDTO> talents;
