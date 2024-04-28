@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.*;
@@ -84,7 +85,57 @@ class IntroMeInterfaceApplicationTests {
     @Test
     @DisplayName("[User] 기업 및 인재상 데이터 등록 요청 API 테스트")
     public void submitDataByUser() throws Exception {
+        String requestBody = """
+                {
+                  "name": "하나은행",
+                  "companyInfo": {
+                    "location": "서울특별시",
+                    "url": "http://hanaaaaaaa.com",
+                    "recruitUrl": "This is Hana recruit url",
+                    "techBlog": "Hana's Tech Blog"
+                  },
+                  "talents": [
+                    {
+                      "keyword": "하나적인 인재",
+                      "description": "하나를 중요하게 여깁니다.",
+                      "baseUrl": "this is base url"
+                    }
+                  ]
+                }
+                """;
+        String expectedResponse = """
+                {
+                  "id": 14,
+                  "name": "하나은행",
+                  "image": "",
+                  "identityColor": "#EEEEEE",
+                  "companyInfo": {
+                    "location": "서울특별시",
+                    "url": "http://hanaaaaaaa.com",
+                    "recruitUrl": "This is Hana recruit url",
+                    "techBlog": "Hana's Tech Blog"
+                  },
+                  "talents": [
+                    {
+                      "id": 19,
+                      "keyword": "하나적인 인재",
+                      "description": "하나를 중요하게 여깁니다.",
+                      "icon": null,
+                      "permission": "PENDING",
+                      "baseUrl": "this is base url"
+                    }
+                  ]
+                }""";
+        String actualResponse = mockMvc.perform(post("/api/v1/company/submit")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
 
+        assertThat(actualResponse).isEqualToIgnoringWhitespace(expectedResponse);
     }
 
     @Test
