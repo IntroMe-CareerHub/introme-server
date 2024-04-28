@@ -49,8 +49,8 @@ public class CompanyService {
         return getCompanyPageDTO(companyPage);
     }
 
-    public CompanyPageDTO<List<AllCompaniesResDTO>> findCompanyByKeyword(String keyword, Pageable pageable) {
-        Page<Company> companyPage = companyRepository.findByNameContaining(keyword, pageable);
+    public CompanyPageDTO<List<AllCompaniesResDTO>> findCompanyByCompanyName(String companyName, Pageable pageable) {
+        Page<Company> companyPage = companyRepository.findByNameContaining(companyName, pageable);
         return getCompanyPageDTO(companyPage);
     }
 

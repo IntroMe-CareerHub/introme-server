@@ -90,8 +90,8 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @GetMapping(value = "/company/search")
-    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> search(@RequestParam String keyword, @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findCompanyByKeyword(keyword, pageable);
+    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> search(@RequestParam String companyName, @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findCompanyByCompanyName(companyName, pageable);
 
         return ResponseEntity.ok(data);
     }
