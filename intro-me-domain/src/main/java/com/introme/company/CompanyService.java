@@ -10,6 +10,8 @@ import com.introme.company.entity.Company;
 import com.introme.company.entity.PageInfo;
 import com.introme.company.entity.Permission;
 import com.introme.company.repository.CompanyRepository;
+import com.introme.exception.CustomException;
+import com.introme.exception.ServiceErrorCode;
 import com.introme.talent.dto.request.TalentReqDTO;
 import com.introme.talent.entity.Talent;
 import lombok.RequiredArgsConstructor;
@@ -33,13 +35,12 @@ public class CompanyService {
     public Company submit(SubmitCompanyReqDTO submitCompanyReqDTO) {
         return companyRepository.save(Company.toTempEntity(submitCompanyReqDTO));
     }
+
     private CompanyPageDTO<List<AllCompaniesResDTO>> getCompanyPageDTO(Page<Company> companyPage) {
         PageInfo pageInfo = new PageInfo(companyPage.getNumber() + 1, companyPage.getSize(), (int) companyPage.getTotalElements(), companyPage.getTotalPages());
 
         List<Company> companyList = companyPage.getContent();
-        List<AllCompaniesResDTO> allCompanies = companyList.stream()
-                .map(AllCompaniesResDTO::toResponseDTO)
-                .toList();
+        List<AllCompaniesResDTO> allCompanies = companyList.stream().map(AllCompaniesResDTO::toResponseDTO).toList();
 
         return new CompanyPageDTO<>(allCompanies, pageInfo);
     }
@@ -55,7 +56,8 @@ public class CompanyService {
     }
 
     public CompanyDetailResDTO findCompanyData(Long companyId) {
-        return CompanyDetailResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
+        return CompanyDetailResDTO.toResponseDTO(companyRepository.findById(companyId)
+                .orElseThrow(() -> new CustomException(ServiceErrorCode.COMPANY_NOT_FOUND)));
     }
 
 
