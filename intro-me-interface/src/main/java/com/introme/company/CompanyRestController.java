@@ -2,23 +2,30 @@ package com.introme.company;
 
 
 import com.introme.company.dto.request.CompanyReqDTO;
-import com.introme.company.dto.response.CompanyResDTO;
+import com.introme.company.dto.request.SubmitCompanyReqDTO;
+import com.introme.company.dto.response.AllCompaniesResDTO;
+import com.introme.company.dto.response.CompanyPageDTO;
+import com.introme.company.dto.response.CompanyDetailResDTO;
+import com.introme.company.dto.response.SubmitCompanyResDTO;
+import com.introme.talent.dto.request.TalentReqDTO;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @OpenAPIDefinition(
         info = @Info(title = "기업별 인재상 리스트 API 명세서",
                 version = "v1"
-            )
         )
+)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
@@ -26,48 +33,43 @@ public class CompanyRestController {
 
     private final CompanyService companyService;
 
-    @Tag(name = "DB 세팅")
+    @Tag(name = "기업별 인재상 리스트 API")
+
     @Operation(
-            summary = "[Admin] 기업 인재상 데이터 저장 API",
+            summary = "[Admin] 기업 및 인재상 데이터 저장 API",
             description = "관리자가 직접 기업 정보 데이터를 저장합니다.",
-            tags = "DB 세팅"
+            tags = "기업별 인재상 리스트 API"
     )
     @PostMapping(value = "/company/add", produces = "application/json")
-    public ResponseEntity<CompanyResDTO> saveCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
-        var data = companyService.save(companyReqDTO);
-        var res = CompanyResDTO.toResponseDTO(data);
-        return ResponseEntity.ok(res);
+    public ResponseEntity<CompanyDetailResDTO> saveCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
+        var company = companyService.save(companyReqDTO);
+        var data = CompanyDetailResDTO.toResponseDTO(company);
+        return ResponseEntity.ok(data);
     }
 
     @Operation(
-            summary = "[User] 기업 인재상 데이터 등록 요청 API",
-            description = "사용자가 입력한 기업 정보 데이터를 미승인 타입으로 저장합니다.",
-            tags = "DB 세팅"
+            summary = "[User] 기업 및 인재상 데이터 등록 요청 API",
+            description = "사용자가 입력한 기업 정보 데이터를 PENDING 타입으로 저장합니다.",
+            tags = "기업별 인재상 리스트 API"
     )
     @PostMapping(value = "/company/submit", produces = "application/json")
-    public ResponseEntity<CompanyResDTO> submitCompanyData(@RequestBody CompanyReqDTO companyReqDTO) {
-        var data = companyService.submit(companyReqDTO);
-        var res = CompanyResDTO.toResponseDTO(data);
+    public ResponseEntity<SubmitCompanyResDTO> submitCompanyData(@RequestBody SubmitCompanyReqDTO submitCompanyReqDTO) {
+        var company = companyService.submit(submitCompanyReqDTO);
+        var data = SubmitCompanyResDTO.toResponseDTO(company);
 
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(data);
     }
 
-    @Tag(name = "기업별 인재상 리스트 API")
     @Operation(
             summary = "전체 기업 조회하기 API",
-            description = "전체 기업의 데이터를 조회합니다.",
+            description = "전체 기업의 데이터를 페이지별로 나누어 조회합니다.",
             tags = "기업별 인재상 리스트 API"
-
     )
     @GetMapping(value = "/company/list")
-    public ResponseEntity<List<CompanyResDTO>> getCompanyList() {
-        var data = companyService.findAllCompany();
+    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findAllCompany(pageable);
 
-        var res = data.stream()
-                .map(CompanyResDTO::toResponseDTO)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(data);
     }
 
     @Operation(
@@ -77,7 +79,7 @@ public class CompanyRestController {
 
     )
     @GetMapping(value = "/company/talent/{companyId}")
-    public ResponseEntity<CompanyResDTO> getTalent(@PathVariable("companyId") Long companyId) {
+    public ResponseEntity<CompanyDetailResDTO> getTalent(@PathVariable("companyId") Long companyId) {
         var res = companyService.findCompanyData(companyId);
         return ResponseEntity.ok(res);
     }
@@ -88,8 +90,21 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @GetMapping(value = "/company/search")
-    public ResponseEntity<List<CompanyResDTO>> search(@RequestParam String keyword) {
-        var res = companyService.findCompanyByKeyword(keyword);
-        return ResponseEntity.ok(res);
+    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> search(@RequestParam String companyName, @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findCompanyByCompanyName(companyName, pageable);
+
+        return ResponseEntity.ok(data);
     }
+
+    @Operation(
+            summary = "[User] 특정 기업 인재상 추가하기 API",
+            description = "[User] 특정 기업의 인재상을 추가합니다.",
+            tags = "기업별 인재상 리스트 API"
+    )
+    @PostMapping(value = "/company/talent/submit")
+    public ResponseEntity<SubmitCompanyResDTO> addTalents(@RequestParam Long companyId, @RequestBody TalentReqDTO talents) {
+        return ResponseEntity.ok(companyService.submitTalent(companyId, talents));
+    }
+
+
 }

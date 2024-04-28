@@ -1,11 +1,13 @@
 package com.introme.talent.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
 
 @Getter
 public class TalentReqDTO {
-    @NonNull
+    @NotNull
     private String keyword;
+    @NotNull
     private String description;
+    private String baseUrl;
 }

@@ -12,5 +12,6 @@ import lombok.Setter;
 public class CompanyInfo {
     private String location;
     private String url;
-    private String phoneNumber;
+    private String recruitUrl;
+    private String techBlog;
 }

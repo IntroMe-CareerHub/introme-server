@@ -1,12 +1,21 @@
 package com.introme.company;
 
 import com.introme.company.dto.request.CompanyReqDTO;
-import com.introme.company.dto.response.CompanyResDTO;
+import com.introme.company.dto.request.SubmitCompanyReqDTO;
+import com.introme.company.dto.response.AllCompaniesResDTO;
+import com.introme.company.dto.response.CompanyDetailResDTO;
+import com.introme.company.dto.response.CompanyPageDTO;
+import com.introme.company.dto.response.SubmitCompanyResDTO;
 import com.introme.company.entity.Company;
+import com.introme.company.entity.PageInfo;
 import com.introme.company.entity.Permission;
 import com.introme.company.repository.CompanyRepository;
+import com.introme.talent.dto.request.TalentReqDTO;
+import com.introme.talent.entity.Talent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,23 +30,42 @@ public class CompanyService {
         return companyRepository.save(Company.toEntity(companyReqDTO));
     }
 
-    public Company submit(CompanyReqDTO companyReqDTO) {
-        return companyRepository.save(Company.toTempEntity(companyReqDTO));
+    public Company submit(SubmitCompanyReqDTO submitCompanyReqDTO) {
+        return companyRepository.save(Company.toTempEntity(submitCompanyReqDTO));
     }
+    private CompanyPageDTO<List<AllCompaniesResDTO>> getCompanyPageDTO(Page<Company> companyPage) {
+        PageInfo pageInfo = new PageInfo(companyPage.getNumber() + 1, companyPage.getSize(), (int) companyPage.getTotalElements(), companyPage.getTotalPages());
 
-    public List<Company> findAllCompany() {
-        // find only approved company data
-        return companyRepository.findByPermission(Permission.APPROVED);
-    }
-
-    public CompanyResDTO findCompanyData(Long companyId) {
-        return CompanyResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
-    }
-
-    public List<CompanyResDTO> findCompanyByKeyword(String keyword) {
-        return companyRepository.findByNameContaining(keyword).stream()
-                .map(CompanyResDTO::toResponseDTO)
+        List<Company> companyList = companyPage.getContent();
+        List<AllCompaniesResDTO> allCompanies = companyList.stream()
+                .map(AllCompaniesResDTO::toResponseDTO)
                 .toList();
+
+        return new CompanyPageDTO<>(allCompanies, pageInfo);
+    }
+
+    public CompanyPageDTO<List<AllCompaniesResDTO>> findAllCompany(Pageable pageable) {
+        Page<Company> companyPage = companyRepository.findAllByPermission(Permission.APPROVED, pageable);
+        return getCompanyPageDTO(companyPage);
+    }
+
+    public CompanyPageDTO<List<AllCompaniesResDTO>> findCompanyByCompanyName(String companyName, Pageable pageable) {
+        Page<Company> companyPage = companyRepository.findByNameContaining(companyName, pageable);
+        return getCompanyPageDTO(companyPage);
+    }
+
+    public CompanyDetailResDTO findCompanyData(Long companyId) {
+        return CompanyDetailResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
+    }
+
+
+    public SubmitCompanyResDTO submitTalent(Long companyId, TalentReqDTO talentReqDTO) {
+        Talent talent = Talent.toEntity(talentReqDTO);
+        Company company = companyRepository.findById(companyId).orElseThrow();
+        company.getTalents().add(talent);
+        companyRepository.save(company);
+
+        return SubmitCompanyResDTO.toResponseDTO(company);
     }
 }
 
