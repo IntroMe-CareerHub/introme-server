@@ -56,7 +56,7 @@ INSERT INTO TALENT (BASE_URL, DESCRIPTION, ICON, KEYWORD, PERMISSION, COMPANY_ID
                                                                                       ('', '자율과 책임에 기반하여 성과를 낸다.', 'icon.png', '주도적 몰입', 'APPROVED', 8),
                                                                                       ('', '현재에 만족하지 않고 도전한다.', 'icon.png', '대담한 도전', 'APPROVED', 9),
                                                                                       ('', '현재에 만족하지 않고 도전한다.', 'icon.png', '대담한 도전', 'APPROVED', 10),
-                                                                                      ('', '현재에 만족하지 않고 도전한다.', 'icon.png', '현재에 만족하지않는 정신', 'PENDING', 11),
+                                                                                      ('', '현재에 만족하지 않고 도전한다.', 'icon.png', '현재에 만족하지않는 정신', 'APPROVED', 11),
                                                                                       ('', '고객이 원하는 최고의 경험을 만든다.', 'icon.png', '고객중심', 'APPROVED', 12),
                                                                                       ('', '자율과 책임에 기반하여 성과를 낸다.', 'icon.png', '주도적 몰입', 'APPROVED', 13),
                                                                                       ('', '현재에 만족하지 않고 도전한다.', 'icon.png', '대담한 도전', 'APPROVED', 13);
