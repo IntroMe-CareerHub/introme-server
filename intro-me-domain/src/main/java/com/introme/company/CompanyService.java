@@ -33,6 +33,9 @@ public class CompanyService {
     }
 
     public Company submit(SubmitCompanyReqDTO submitCompanyReqDTO) {
+        if (submitCompanyReqDTO == null) {
+            throw new CustomException(ServiceErrorCode.INVALID_REQUEST);
+        }
         return companyRepository.save(Company.toTempEntity(submitCompanyReqDTO));
     }
 
@@ -62,8 +65,11 @@ public class CompanyService {
 
 
     public SubmitCompanyResDTO submitTalent(Long companyId, TalentReqDTO talentReqDTO) {
+        if (talentReqDTO == null) {
+            throw new CustomException(ServiceErrorCode.INVALID_REQUEST);
+        }
         Talent talent = Talent.toEntity(talentReqDTO);
-        Company company = companyRepository.findById(companyId).orElseThrow();
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new CustomException(ServiceErrorCode.COMPANY_NOT_FOUND));
         company.getTalents().add(talent);
         companyRepository.save(company);
 
