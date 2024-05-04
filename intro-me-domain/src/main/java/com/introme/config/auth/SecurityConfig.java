@@ -20,6 +20,7 @@ public class SecurityConfig{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        // TODO: 코드 돌아가는 흐름 깨우치기 & 리팩토링
         httpSecurity
                 .csrf(CsrfConfigurer::disable)
                 .headers((headerConfig) -> headerConfig.frameOptions(
