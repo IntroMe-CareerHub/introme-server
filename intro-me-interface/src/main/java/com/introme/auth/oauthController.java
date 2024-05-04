@@ -1,8 +1,9 @@
 package com.introme.auth;
 
-import com.introme.user.entity.SessionUser;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,15 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequiredArgsConstructor
 public class oauthController {
+    private static final Logger log = LoggerFactory.getLogger(oauthController.class);
     private final HttpSession httpSession;
-
-    @GetMapping(value = "/oauth/login")
-    public String index2(Model model) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        model.addAttribute("userName", user.getName());
-
-        return "index2";
-    }
 
     @GetMapping("/")
     public String index(Model model) {
