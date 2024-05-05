@@ -22,31 +22,29 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
-    private static final String NO_CHECK_URL = "/login";
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
-    private UserRepository userRepository;
-    private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
+    private final GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals(NO_CHECK_URL)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         checkAccessTokenAndAuthentication(request, response, filterChain);
     }
 
-    public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    private void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info("checkAccessTokenAndAuthentication() 호출");
         jwtService.extractAccessToken(request)
-                .filter(jwtService::isTokenValid).flatMap(jwtService::extractEmail).flatMap(email -> userRepository.findByEmail(email)).ifPresent(this::saveAuthentication);
+                .filter(jwtService::isTokenValid)
+                .flatMap(jwtService::extractEmail)
+                .flatMap(userRepository::findByEmail)
+                .ifPresent(this::saveAuthentication);
 
         filterChain.doFilter(request, response);
     }
 
-    public void saveAuthentication(IntroMeUser user) {
+    private void saveAuthentication(IntroMeUser user) {
         String pw = user.getPassword();
         if (pw == null) {
             pw = PasswordUtil.getRandomPassword(15);
