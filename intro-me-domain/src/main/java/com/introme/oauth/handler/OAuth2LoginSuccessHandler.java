@@ -1,7 +1,7 @@
 package com.introme.oauth.handler;
 
 import com.introme.oauth.jwt.JwtService;
-import com.introme.user.CustomOAuth2User;
+import com.introme.oauth.CustomOAuth2User;
 import com.introme.user.entity.Role;
 import com.introme.user.repository.UserRepository;
 import jakarta.servlet.ServletException;

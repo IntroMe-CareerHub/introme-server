@@ -1,8 +1,6 @@
-package com.introme.user;
+package com.introme.oauth;
 
-import com.introme.oauth.SocialType;
 import com.introme.user.entity.IntroMeUser;
-import com.introme.oauth.OAuthAttributes;
 import com.introme.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

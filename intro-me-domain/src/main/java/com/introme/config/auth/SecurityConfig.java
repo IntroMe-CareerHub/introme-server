@@ -4,7 +4,7 @@ import com.introme.oauth.handler.OAuth2LoginFailureHandler;
 import com.introme.oauth.handler.OAuth2LoginSuccessHandler;
 import com.introme.oauth.jwt.JwtAuthenticationProcessingFilter;
 import com.introme.oauth.jwt.JwtService;
-import com.introme.user.CustomOAuth2UserService;
+import com.introme.oauth.CustomOAuth2UserService;
 import com.introme.user.entity.Role;
 import com.introme.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

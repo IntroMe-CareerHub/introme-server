@@ -1,4 +1,4 @@
-package com.introme.user;
+package com.introme.oauth;
 
 import com.introme.user.entity.Role;
 import lombok.Getter;
