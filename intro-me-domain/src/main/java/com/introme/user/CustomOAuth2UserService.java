@@ -3,8 +3,7 @@ package com.introme.user;
 import com.introme.oauth.SocialType;
 import com.introme.user.entity.IntroMeUser;
 import com.introme.oauth.OAuthAttributes;
-import com.introme.user.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
+import com.introme.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +21,8 @@ import java.util.Collections;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private static final Logger log = LoggerFactory.getLogger(CustomOAuth2UserService.class);
-    private final UserRepository userRepository;
-    private final HttpSession httpSession;
+    private final UserService userService;
+    private static final String GOOGLE = "google";
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -31,7 +30,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        SocialType socialType = SocialType.GOOGLE;
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        SocialType socialType = getSocialType(registrationId);
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails()
                 .getUserInfoEndpoint()
@@ -39,28 +39,20 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(socialType, userNameAttributeName, oAuth2User.getAttributes());
 
-        IntroMeUser createdUser = getUser(attributes, socialType);
+        IntroMeUser user = userService.getUser(attributes, socialType);
 
         return new CustomOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().getKey())),
+                Collections.singleton(new SimpleGrantedAuthority(user.getRole().getKey())),
                 oAuth2User.getAttributes(),
                 attributes.getNameAttributeKey(),
-                createdUser.getEmail(),
-                createdUser.getRole());
+                user.getEmail(),
+                user.getRole());
     }
 
-    private IntroMeUser getUser(OAuthAttributes attributes, SocialType socialType) {
-        IntroMeUser findUser = userRepository.findBySocialTypeAndSocialId(socialType, attributes.getOauth2UserInfo().getId()).orElse(null);
-        if (findUser == null) {
-            return saveUser(attributes, socialType);
+    private SocialType getSocialType(String registrationId) {
+        if (GOOGLE.equals(registrationId)) {
+            return SocialType.GOOGLE;
         }
-        return findUser;
+        return null;
     }
-
-    private IntroMeUser saveUser(OAuthAttributes attributes, SocialType socialType) {
-        IntroMeUser user = attributes.toEntity(socialType, attributes.getOauth2UserInfo());
-
-        return userRepository.save(user);
-    }
-
 }
