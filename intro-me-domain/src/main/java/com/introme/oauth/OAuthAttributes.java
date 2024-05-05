@@ -33,15 +33,4 @@ public class OAuthAttributes {
                 .oauth2UserInfo(new GoogleOAuth2UserInfo(attributes))
                 .build();
     }
-
-    public IntroMeUser toEntity(SocialType socialType, Oauth2UserInfo oauth2UserInfo) {
-        return IntroMeUser.builder()
-                .socialType(socialType)
-                .socialId(oauth2UserInfo.getId())
-                .name(oauth2UserInfo.getName())
-                .email(oauth2UserInfo.getEmail())
-                .role(Role.User)
-                .picture(oauth2UserInfo.getPicture())
-                .build();
-    }
 }

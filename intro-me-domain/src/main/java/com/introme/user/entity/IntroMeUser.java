@@ -1,6 +1,7 @@
 package com.introme.user.entity;
 
 import com.introme.oauth.SocialType;
+import com.introme.oauth.userInfo.Oauth2UserInfo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,5 +31,16 @@ public class IntroMeUser {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    public static IntroMeUser toEntity(SocialType socialType, Oauth2UserInfo oauth2UserInfo) {
+        return IntroMeUser.builder()
+                .socialType(socialType)
+                .socialId(oauth2UserInfo.getId())
+                .name(oauth2UserInfo.getName())
+                .email(oauth2UserInfo.getEmail())
+                .role(Role.User)
+                .picture(oauth2UserInfo.getPicture())
+                .build();
+    }
 }
 
