@@ -44,9 +44,8 @@ public class SecurityConfig {
                         .successHandler(oAuth2LoginSuccessHandler)
                         .failureHandler(oAuth2LoginFailureHandler)
                         .userInfoEndpoint((userInfoEndpointConfig -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService))));
-
-        httpSecurity.addFilterBefore(jwtAuthenticationProcessingFilter(), LogoutFilter.class);
+                                .userService(customOAuth2UserService))))
+                .addFilterBefore(jwtAuthenticationProcessingFilter(), LogoutFilter.class);
 
         return httpSecurity.build();
     }
