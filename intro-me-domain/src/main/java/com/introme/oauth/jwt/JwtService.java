@@ -3,7 +3,6 @@ package com.introme.oauth.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.introme.oauth.util.ExpirationDateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -11,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.time.Clock;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -34,7 +37,7 @@ public class JwtService {
     public String createAccessToken(String email) {
         return JWT.create()
                 .withSubject(ACCESS_TOKEN_SUBJECT)
-                .withExpiresAt(ExpirationDateUtil.getExpirationDate(accessTokenExpirationPeriod))
+                .withExpiresAt(JwtSupport.createExpirationDate(accessTokenExpirationPeriod))
                 .withClaim(EMAIL_CLAIM, email)
                 .sign(Algorithm.HMAC512(secretKey));
     }
@@ -72,6 +75,15 @@ public class JwtService {
         } catch (Exception e) {
             log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
             return false;
+        }
+    }
+
+    private static class JwtSupport {
+        private static final ZoneId UTC = ZoneId.of("UTC");
+        private static final Long utcCurrentSystemMillis = Clock.system(UTC).millis();
+
+        public static Date createExpirationDate(Long expirationPeriod) {
+            return new Date(utcCurrentSystemMillis + expirationPeriod);
         }
     }
 }
