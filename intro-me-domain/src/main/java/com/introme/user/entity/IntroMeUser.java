@@ -30,22 +30,5 @@ public class IntroMeUser {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
-
-//    @Builder
-//    public IntroMeUser(Long id, String name, String email, String password, String picture, Role role) {
-//        this.id = id;
-//        this.name = name;
-//        this.email = email;
-//        this.password = password;
-//        this.picture = picture;
-//        this.role = role;
-//}
-
-public IntroMeUser update(String name) {
-    this.name = name;
-
-    return this;
-}
 }
 
