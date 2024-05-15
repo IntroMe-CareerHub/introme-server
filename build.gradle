@@ -28,6 +28,23 @@ dependencies {
 	implementation 'org.testng:testng:7.1.0'
 }
 
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+}
+
+dependencies {
+	implementation project(':intro-me-interface')
+}
+
+bootRun {
+	mainClass = 'com.introme.IntroMeInterfaceApplication'
+}
+
+
 subprojects {
 	group = "intro-me"
 	version = "0.0.1-SNAPSHOT"
