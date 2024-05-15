@@ -43,4 +43,13 @@ public class Talent {
                 .permission(Permission.PENDING)
                 .build();
     }
+
+    public static Talent toApprovedEntity(TalentReqDTO talentReqDTO) {
+        return Talent.builder()
+                .keyword(talentReqDTO.getKeyword())
+                .description(talentReqDTO.getDescription())
+                .baseUrl(talentReqDTO.getBaseUrl())
+                .permission(Permission.APPROVED)
+                .build();
+    }
 }
