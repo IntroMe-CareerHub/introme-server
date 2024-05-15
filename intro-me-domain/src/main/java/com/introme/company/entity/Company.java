@@ -62,7 +62,7 @@ public class Company {
 
     public static Company toEntity(CompanyReqDTO companyReqDTO) {
         List<Talent> talentList = companyReqDTO.getTalents().stream()
-                .map(Talent::toEntity)
+                .map(Talent::toApprovedEntity)
                 .toList();
 
         return Company.builder()
