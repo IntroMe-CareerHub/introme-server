@@ -31,7 +31,6 @@ services:
       - prometheus
     networks:
       - app-network
-
   db:
     image: mysql:8.0 # or whatever version you prefer
     environment:
@@ -42,10 +41,6 @@ services:
     volumes:
       - ./resources/data:/var/lib/mysql
       - ./resources/db/migrate:/docker-entrypoint-initdb.d
-    networks:
-      - app-network
-    depends_on:
-      - app
     command: "|
       sleep 5
       mysql -u root -pintrome introme < docker-entrypoint-initdb.d/migrate.sql
