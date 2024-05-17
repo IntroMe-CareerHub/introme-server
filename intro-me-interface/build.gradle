@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":intro-me-domain"))
+    implementation 'io.micrometer:micrometer-registry-prometheus'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 

@@ -1,5 +1,37 @@
 version: '3'
 services:
+  app:
+    image: 'oo9699/intro-me-server:latest'
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./resources/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./resources/grafana_data:/var/lib/grafana  # Grafana 데이터를 영구적으로 저장하기 위한 볼륨
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin  # Grafana 관리자 계정 이름
+      - GF_SECURITY_ADMIN_PASSWORD=secret  # Grafana 관리자 비밀번호
+    depends_on:
+      - prometheus
+    networks:
+      - app-network
+
   db:
     image: mysql:8.0 # or whatever version you prefer
     environment:
@@ -8,9 +40,17 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data:/var/lib/mysql
-      - ./db/migrate:/docker-entrypoint-initdb.d
+      - ./resources/data:/var/lib/mysql
+      - ./resources/db/migrate:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+    depends_on:
+      - app
     command: "|
       sleep 5
       mysql -u root -pintrome introme < docker-entrypoint-initdb.d/migrate.sql
       "
+
+networks:
+  app-network:
+    driver: bridge
