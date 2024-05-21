@@ -38,5 +38,13 @@ jib {
     container {
         ports =["8080"]
         creationTime = "USE_CURRENT_TIMESTAMP"
+//        extraDirectories {
+//            paths {
+//                path {
+//                    from = file('../intro-me-domain/src/main/resources')
+//                    into = '/app/resources'
+//                }
+//            }
+//        }
     }
 }

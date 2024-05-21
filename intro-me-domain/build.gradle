@@ -1,10 +1,7 @@
 tasks.register("prepareKotlinBuildScriptModel"){
-
-
 }
 
 dependencies {
-    runtimeOnly 'com.h2database:h2'
     implementation 'com.mysql:mysql-connector-j'
     implementation 'org.hibernate:hibernate-core:6.4.4.Final'
     implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.7.3'

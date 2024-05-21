@@ -66,7 +66,8 @@ public class CompanyRestController {
             tags = "기업별 인재상 리스트 API"
     )
     @GetMapping(value = "/company/list")
-    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>>
+    getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findAllCompany(pageable);
 
         return ResponseEntity.ok(data);
