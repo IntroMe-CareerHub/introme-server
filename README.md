@@ -56,17 +56,17 @@
 <br>
 
 ### Project Setting
-1. Java 17을 다운로드합니다. (17.0.x 권장)
+1. Docker를 설치합니다.
 2. 로컬 환경에서 해당 프로젝트를 git clone 합니다.
    ```
    https://github.com/IntroMe-CareerHub/introme-server.git
    ```
-3. gradle 빌드합니다.
+3. 전달드린 설정파일들은 관련 위치에 세팅합니다.
+4. Docker 컨테이너를 띄웁니다.
+   ```bash
+   docker-compose up -d
    ```
-   ./gradlew build
+   컨테이너 삭제 방법
    ```
-4. spring boot 서비스를 run합니다.
+   docker-compose down -v
    ```
-   ./gradlew bootrun
-   ```
-   <img width="608" alt="image" src="https://github.com/IntroMe-CareerHub/introme-server/assets/76420055/54190513-f55b-432d-a5eb-6062dc3b5ae3">
