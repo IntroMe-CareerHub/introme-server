@@ -61,8 +61,7 @@
    ```
    https://github.com/IntroMe-CareerHub/introme-server.git
    ```
-3. 전달드린 설정파일들은 관련 위치에 세팅합니다.
-4. Docker 컨테이너를 띄웁니다.
+3. Docker 컨테이너를 띄웁니다.
    ```bash
    docker-compose up -d
    ```
