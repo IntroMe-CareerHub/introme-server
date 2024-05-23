@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: 'oo9699/intro-me-server:latest'
+    image: 'hyebinnn/intro-me-server-final:latest'
     ports:
       - "8080:8080"
     networks:
@@ -45,15 +45,16 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: introme
       MYSQL_DATABASE: introme
+      TZ: "Asia/Seoul"
     ports:
       - "3306:3306"
     volumes:
       - ./resources/data:/var/lib/mysql
       - ./resources/db/migrate:/docker-entrypoint-initdb.d
-    command: "|
-      sleep 5
-      mysql -u root -pintrome introme < docker-entrypoint-initdb.d/migrate.sql
-      "
+      - ./resources/conf.d:/etc/mysql/conf.d
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
     networks:
       - app-network
 

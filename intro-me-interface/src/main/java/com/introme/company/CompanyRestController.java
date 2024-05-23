@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,9 +66,8 @@ public class CompanyRestController {
             description = "전체 기업의 데이터를 페이지별로 나누어 조회합니다.",
             tags = "기업별 인재상 리스트 API"
     )
-    @GetMapping(value = "/company/list")
-    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>>
-    getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    @GetMapping(value = "/company/list", produces = MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8")
+    public ResponseEntity<CompanyPageDTO<List<AllCompaniesResDTO>>> getCompanyList(@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         CompanyPageDTO<List<AllCompaniesResDTO>> data = companyService.findAllCompany(pageable);
 
         return ResponseEntity.ok(data);

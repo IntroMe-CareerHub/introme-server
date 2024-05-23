@@ -8,8 +8,8 @@ CREATE TABLE COMPANY (
                          updated_at datetime not null default CURRENT_TIMESTAMP
 )
     ENGINE=InnoDB
-    default charset=utf8 collate utf8_general_ci;
-;
+    default charset=utf8mb4 collate utf8mb4_general_ci;
+
 
 CREATE TABLE TALENT (
                         ID BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -21,8 +21,8 @@ CREATE TABLE TALENT (
                         COMPANY_ID BIGINT
 )
     ENGINE=InnoDB
-    default charset=utf8 collate utf8_general_ci;
-;
+    default charset=utf8mb4 collate utf8mb4_general_ci;
+
 
 INSERT INTO Company (name, company_info ,image, identity_color)
 VALUES ('카카오', '{ "location": "서울특별시 강서구", "url": "www.kakaocorp.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' , '.icon', '#EEEEEE'),

@@ -31,7 +31,7 @@ jib {
         image = "eclipse-temurin:17-jdk-alpine"
     }
     to {
-        image = 'oo9699/intro-me-server'
+        image = 'hyebinnn/intro-me-server-final'
         tags = ["latest"]
 
     }
