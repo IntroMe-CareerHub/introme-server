@@ -1,4 +1,4 @@
-package com.introme.oauth.util;
+package com.introme.infrastructure.security.oauth.util;
 
 import lombok.Getter;
 

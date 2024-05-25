@@ -1,6 +1,6 @@
-package com.introme.oauth.jwt;
+package com.introme.infrastructure.security.jwt;
 
-import com.introme.oauth.util.PasswordUtil;
+import com.introme.infrastructure.security.oauth.util.PasswordUtil;
 import com.introme.user.entity.IntroMeUser;
 import com.introme.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;

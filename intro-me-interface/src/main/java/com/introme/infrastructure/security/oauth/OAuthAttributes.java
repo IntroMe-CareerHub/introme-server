@@ -1,9 +1,8 @@
-package com.introme.oauth;
+package com.introme.infrastructure.security.oauth;
 
-import com.introme.oauth.userInfo.GoogleOAuth2UserInfo;
-import com.introme.oauth.userInfo.Oauth2UserInfo;
-import com.introme.user.entity.IntroMeUser;
-import com.introme.user.entity.Role;
+import com.introme.infrastructure.security.userInfo.GoogleOAuth2UserInfo;
+import com.introme.infrastructure.security.userInfo.Oauth2UserInfo;
+import com.introme.user.SocialType;
 import lombok.Builder;
 import lombok.Getter;
 

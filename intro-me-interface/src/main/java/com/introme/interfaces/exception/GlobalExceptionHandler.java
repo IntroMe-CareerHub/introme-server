@@ -1,4 +1,4 @@
-package com.introme.exception;
+package com.introme.interfaces.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

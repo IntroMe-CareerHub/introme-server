@@ -1,4 +1,4 @@
-package com.introme.oauth.handler;
+package com.introme.infrastructure.security.oauth.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

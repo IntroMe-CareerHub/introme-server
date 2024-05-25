@@ -1,4 +1,4 @@
-package com.introme.exception;
+package com.introme.interfaces.exception;
 
 import lombok.Builder;
 

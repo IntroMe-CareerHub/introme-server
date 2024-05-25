@@ -1,4 +1,4 @@
-package com.introme.oauth.userInfo;
+package com.introme.infrastructure.security.userInfo;
 
 import java.util.Map;
 

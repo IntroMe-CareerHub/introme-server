@@ -1,4 +1,4 @@
-package com.introme.oauth.jwt;
+package com.introme.infrastructure.security.jwt;
 
 
 import com.auth0.jwt.JWT;
