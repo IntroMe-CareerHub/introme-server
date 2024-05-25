@@ -5,4 +5,9 @@ dependencies {
     implementation 'com.mysql:mysql-connector-j'
     implementation 'org.hibernate:hibernate-core:6.4.4.Final'
     implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.7.3'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+    implementation 'com.auth0:java-jwt:4.4.0'
+
 }
