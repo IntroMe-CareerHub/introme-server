@@ -1,7 +1,7 @@
 package com.introme.infrastructure.security.jwt;
 
 import com.introme.infrastructure.security.oauth.util.PasswordUtil;
-import com.introme.user.entity.IntroMeUser;
+import com.introme.user.entity.User;
 import com.introme.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -44,7 +44,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void saveAuthentication(IntroMeUser user) {
+    private void saveAuthentication(User user) {
         String pw = user.getPassword();
         if (pw == null) {
             pw = PasswordUtil.getRandomPassword(15);

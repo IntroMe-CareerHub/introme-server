@@ -28,7 +28,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("OAuth2 Login 성공");
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
-        if (oAuth2User.getRole() == Role.User) {
+        if (oAuth2User.getRole() == Role.USER) {
             loginSuccess(response, oAuth2User);
         }
     }

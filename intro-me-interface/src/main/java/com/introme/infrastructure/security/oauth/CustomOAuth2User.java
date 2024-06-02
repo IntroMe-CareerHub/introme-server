@@ -1,4 +1,4 @@
-package com.introme.oauth;
+package com.introme.infrastructure.security.oauth;
 
 import com.introme.user.entity.Role;
 import lombok.Getter;
@@ -10,8 +10,8 @@ import java.util.Map;
 
 @Getter
 public class CustomOAuth2User extends DefaultOAuth2User {
-    private String email;
-    private Role role;
+    private final String email;
+    private final Role role;
 
     public CustomOAuth2User(Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes, String nameAttributeKey, String email, Role role) {
         super(authorities, attributes, nameAttributeKey);

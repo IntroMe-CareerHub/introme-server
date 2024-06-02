@@ -1,6 +1,6 @@
-package com.introme.oauth;
+package com.introme.infrastructure.security.oauth;
 
-import com.introme.user.entity.IntroMeUser;
+import com.introme.user.UserProviderType;
 import com.introme.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -29,28 +29,22 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        SocialType socialType = getSocialType(registrationId);
+        UserProviderType providerType = getSocialType(registrationId);
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails()
                 .getUserInfoEndpoint()
                 .getUserNameAttributeName();
 
-        OAuthAttributes attributes = OAuthAttributes.of(socialType, userNameAttributeName, oAuth2User.getAttributes());
+        OAuthAttributes attributes = OAuthAttributes.of(providerType, userNameAttributeName, oAuth2User.getAttributes());
 
-        IntroMeUser user = userService.getUser(attributes.getOauth2UserInfo(), socialType);
+//        IntroMeUser user = userService.getUser(attributes.getOauth2UserInfo(), socialType);
 
         return new CustomOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRole().getKey())),
                 oAuth2User.getAttributes(),
-                attributes.getNameAttributeKey(),
-                user.getEmail(),
-                user.getRole());
+                attributes.getNameAttributeKey()
+//                user.getEmail(),
+//                user.getRole());
     }
 
-    private SocialType getSocialType(String registrationId) {
-        if (GOOGLE.equals(registrationId)) {
-            return SocialType.GOOGLE;
-        }
-        return null;
-    }
 }

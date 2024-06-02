@@ -1,5 +1,6 @@
 package com.introme.user.entity;
 
+import com.introme.user.UserProviderType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,11 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column
     private String picture;
+
+    @Column
+    private UserProviderType userProviderType;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

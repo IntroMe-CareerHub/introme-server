@@ -1,4 +1,4 @@
-package com.introme.infrastructure.security.userInfo;
+package com.introme.infrastructure.security.user;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
 package com.introme.infrastructure.security.oauth;
 
-import com.introme.infrastructure.security.userInfo.GoogleOAuth2UserInfo;
-import com.introme.infrastructure.security.userInfo.Oauth2UserInfo;
-import com.introme.user.SocialType;
+import com.introme.infrastructure.security.user.GoogleOAuth2UserInfo;
+import com.introme.infrastructure.security.user.Oauth2UserInfo;
+import com.introme.user.UserProviderType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,8 +19,8 @@ public class OAuthAttributes {
         this.oauth2UserInfo = oauth2UserInfo;
     }
 
-    public static OAuthAttributes of(SocialType socialType, String usernameAttributeName, Map<String, Object> attributes) {
-       if (socialType == SocialType.GOOGLE) {
+    public static OAuthAttributes of(Pr  providerType, String usernameAttributeName, Map<String, Object> attributes) {
+       if (providerType == UserProviderType.GOOGLE) {
            return ofGoogle(usernameAttributeName, attributes);
        }
        return null;
