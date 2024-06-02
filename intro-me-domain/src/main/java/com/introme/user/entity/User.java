@@ -23,11 +23,32 @@ public class User {
     @Column
     private String picture;
 
-    @Column
-    private UserProviderType userProviderType;
+    @Embedded
+    private ProviderKey key;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+
+    @Embeddable
+    @NoArgsConstructor
+    public static class ProviderKey {
+        @Enumerated(EnumType.STRING)
+        @Column(name = "providerType")
+        UserProviderType type;
+        @Column(name = "providerAccountId")
+        String id;
+
+        public ProviderKey(UserProviderType providerType, String providerAccountId) {
+            this.type = providerType;
+            this.id = providerAccountId;
+        }
+
+        public static ProviderKey of(String providerAccountId, UserProviderType providerType) {
+            return new ProviderKey(providerType, providerAccountId);
+        }
+    }
+
 }
 

@@ -1,5 +1,7 @@
 package com.introme.user;
 
+import com.introme.user.entity.Role;
+
 public interface ProviderUser {
     String getId();
 
@@ -8,4 +10,6 @@ public interface ProviderUser {
     String getEmail();
 
     String getName();
+
+    Role getRole();
 }

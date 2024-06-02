@@ -12,12 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    //TODO
-    public User getUser(String email, UserProviderType userProviderType) {
-        return null;
-    }
 
-    public User createAccount(ProviderUser providerUser) {
-        return null;
-    }
+
+
 }
