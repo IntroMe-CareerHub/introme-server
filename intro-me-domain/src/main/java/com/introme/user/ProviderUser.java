@@ -10,6 +10,4 @@ public interface ProviderUser {
     String getEmail();
 
     String getName();
-
-    Role getRole();
 }
