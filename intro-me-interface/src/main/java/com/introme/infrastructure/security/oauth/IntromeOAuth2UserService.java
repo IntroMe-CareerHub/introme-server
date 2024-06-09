@@ -2,7 +2,9 @@ package com.introme.infrastructure.security.oauth;
 
 
 import com.introme.infrastructure.security.user.IntromeUserContext;
+import com.introme.user.entity.Role;
 import com.introme.user.entity.User;
+import com.introme.user.service.UserCommand;
 import com.introme.user.service.UserQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class IntromeOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+    private final UserCommand userCommand;
     private final UserQuery userQuery;
     private final OAuth2ProviderUserResolver oAuth2ProviderUserResolver;
 
@@ -25,8 +28,10 @@ public class IntromeOAuth2UserService implements OAuth2UserService<OAuth2UserReq
         OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
         OAuth2ProviderUser providerUser = oAuth2ProviderUserResolver.resolve(userRequest, oAuth2User);
 
-        User user = userQuery.getUser(oAuth2User.getAttribute(StandardClaimNames.EMAIL), oAuth2Provider.userProviderType());
-
+        User user = userQuery.getUserOrNull(oAuth2User.getAttribute(StandardClaimNames.EMAIL), oAuth2Provider.userProviderType());
+        if (user == null) {
+            user = userCommand.createUser(providerUser, Role.ADMIN);
+        }
         return IntromeOauth2User.builder()
                 .oauth2User(oAuth2User)
                 .userContext(IntromeUserContext.of(user, providerUser))
