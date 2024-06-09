@@ -39,10 +39,11 @@ jib {
     from {
         image = "eclipse-temurin:17-jdk-alpine"
     }
+
     to {
-        image = 'hyebinnn/intro-me-server-final'
-        // 현재 시간을 기반으로 태그 생성
         def timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
+        image = 'hyebinnn/intro-me-server-final:' + timestamp
+
         tags = ["latest", timestamp]
 
     }
