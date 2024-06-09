@@ -2,12 +2,14 @@ package com.introme.infrastructure.security.user;
 
 import com.introme.user.ProviderUser;
 import com.introme.user.UserProviderType;
+import com.introme.user.entity.Role;
 
 record GoogleProviderUser(
         String id,
         UserProviderType providerType,
         String email,
-        String name
+        String name,
+        Role role
 ) implements ProviderUser {
 
 
@@ -29,5 +31,10 @@ record GoogleProviderUser(
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public Role getRole() {
+        return this.role;
     }
 }
