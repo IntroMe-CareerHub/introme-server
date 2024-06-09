@@ -18,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtService {
-
     private final JwtConfiguration.JwtProperties jwtProperties;
 
     private static final String ACCESS_TOKEN_SUBJECT = "introme";
@@ -34,7 +33,7 @@ public class JwtService {
 
     }
 
-    public void setAccessToken(HttpServletResponse response, String accessToken) {
+    public void setAccessTokenAtHeader(HttpServletResponse response, String accessToken) {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader(jwtProperties.accessHeader(), BEARER + accessToken);
     }
