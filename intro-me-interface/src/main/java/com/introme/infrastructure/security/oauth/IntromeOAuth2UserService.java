@@ -2,7 +2,6 @@ package com.introme.infrastructure.security.oauth;
 
 
 import com.introme.infrastructure.security.user.IntromeUserContext;
-import com.introme.infrastructure.security.user.ProviderImpl;
 import com.introme.user.entity.User;
 import com.introme.user.service.UserQuery;
 import lombok.RequiredArgsConstructor;
@@ -34,4 +33,3 @@ public class IntromeOAuth2UserService implements OAuth2UserService<OAuth2UserReq
                 .build();
     }
 }
-
