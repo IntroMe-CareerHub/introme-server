@@ -13,6 +13,5 @@ public class JwtConfiguration {
             String secretKey,
             Long accessTokenExpirationPeriod,
             String accessHeader
-    ) {
-    }
+    ){}
 }

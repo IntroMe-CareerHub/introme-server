@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
 
 
 interface UserRepositoryCustom {
-    User findByEmail(String email);
+    User findByIdAndEmail(Long id, String email);
 
     User findByEmailAndProviderType(String email, UserProviderType providerType);
 }
@@ -26,9 +26,9 @@ class UserRepositoryCustomImpl extends QuerydslRepositorySupport implements User
 
 
     @Override
-    public User findByEmail(String email) {
+    public User findByIdAndEmail(Long id, String email) {
         return from(user)
-                .where(user.email.eq(email))
+                .where(user.email.eq(email).and(user.id.eq(id)))
                 .fetchFirst();
     }
 

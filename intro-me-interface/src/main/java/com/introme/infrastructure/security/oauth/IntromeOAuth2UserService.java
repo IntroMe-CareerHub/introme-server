@@ -30,16 +30,8 @@ public class IntromeOAuth2UserService implements OAuth2UserService<OAuth2UserReq
 
         return IntromeOauth2User.builder()
                 .oauth2User(oAuth2User)
-                .userContext(
-                        new IntromeUserContext(
-                                user.getId(),
-                                user.getEmail(),
-                                ProviderImpl.builder()
-                                        .id(providerUser.id())
-                                        .type(providerUser.userProviderType().name())
-                                        .build()
-                        )
-                ).build();
+                .userContext(IntromeUserContext.of(user, providerUser))
+                .build();
     }
 }
 

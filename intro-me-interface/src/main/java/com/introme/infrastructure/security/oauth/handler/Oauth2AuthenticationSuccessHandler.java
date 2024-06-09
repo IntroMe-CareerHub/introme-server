@@ -3,7 +3,6 @@ package com.introme.infrastructure.security.oauth.handler;
 import com.introme.infrastructure.security.jwt.JwtService;
 import com.introme.infrastructure.security.oauth.IntromeOauth2User;
 import com.introme.user.entity.Role;
-import com.introme.user.service.UserQuery;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,13 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 @RequiredArgsConstructor
 public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
-    private final UserQuery userQuery;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -31,9 +31,9 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
     }
 
     private void loginSuccess(HttpServletResponse response, IntromeOauth2User oAuth2User) throws IOException {
-        String accessToken = jwtService.createAccessToken(oAuth2User.userContext().getEmail());
+        String accessToken = jwtService.createAccessToken(oAuth2User.userContext().getEmail(), oAuth2User.userContext().getId());
         jwtService.setAccessTokenAtHeader(response, accessToken);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OAuth2LoginFailureHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(OAuth2AuthenticationFailureHandler.class);
 }

@@ -18,7 +18,13 @@ public class UserQuery {
 
     public User getUser(String email, UserProviderType userProviderType) {
         User user = userRepository.findByEmailAndProviderType(email, userProviderType);
-        if(user == null) throw new NoSuchElementException("해당 User 가 존재하지 않음");
+        if (user == null) throw new NoSuchElementException("해당 User 가 존재하지 않음");
+        return user;
+    }
+
+    public User getUser(Long userId, String email) {
+        User user = userRepository.findByIdAndEmail(userId, email);
+        if (user == null) throw new NoSuchElementException("해당 User 가 존재하지 않음");
         return user;
     }
 }
