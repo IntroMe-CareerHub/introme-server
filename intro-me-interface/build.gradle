@@ -42,7 +42,7 @@ jib {
 
     to {
         def timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
-        image = 'hyebinnn/intro-me-server-final:' + timestamp
+        image = 'oo9699/intro-me-server:' + timestamp
 
         tags = ["latest", timestamp]
 
