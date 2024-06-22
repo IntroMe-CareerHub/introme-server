@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -39,15 +39,16 @@ public class SecurityConfiguration {
                 ))
                 .authorizeHttpRequests((authorizeRequest) ->
                         authorizeRequest
-                                .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/h2-console/**", "/login").permitAll()
+                                .requestMatchers( "/h2-console/**", "/login").permitAll()
                                 .requestMatchers("/admin/**").hasAnyRole(Role.ADMIN.name())
-                                .anyRequest().authenticated())
+                                .anyRequest().authenticated()
+                )
                 .oauth2Login((oauth2) -> oauth2
                         .successHandler(oAuth2LoginSuccessHandler)
                         .failureHandler(oAuth2AuthenticationFailureHandler)
                         .userInfoEndpoint((userInfoEndpointConfig -> userInfoEndpointConfig
                                 .userService(intromeOAuth2UserService))))
-                .addFilterAfter(new JwtAuthenticationFilter(jwtService, userQuery), AuthenticationFilter.class);
+                .addFilterAfter(new JwtAuthenticationFilter(jwtService, userQuery), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

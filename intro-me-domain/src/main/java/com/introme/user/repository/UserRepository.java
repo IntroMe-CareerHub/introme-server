@@ -20,8 +20,8 @@ interface UserRepositoryCustom {
 }
 
 class UserRepositoryCustomImpl extends QuerydslRepositorySupport implements UserRepositoryCustom {
-    public UserRepositoryCustomImpl(Class<User> domainClass) {
-        super(domainClass);
+    UserRepositoryCustomImpl() {
+        super(User.class);
     }
 
 
