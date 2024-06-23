@@ -23,12 +23,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userQuery = userQuery;
     }
 
+    private static final String[] EXCLUDED_PATHS = {"/login/oauth2/code", "/oauth2/authorization"};
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("doFilterInternal");
+        String path = request.getRequestURI();
+        for (String excludedPath : EXCLUDED_PATHS) {
+            if (path.startsWith(excludedPath)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+        }
+
         try {
             String token = jwtService.extractAccessToken(request)
                     .filter(jwtService::isTokenValid)
                     .orElseThrow(IllegalAccessException::new);
+            System.out.println("token : " + token);
+
             setAuthentication(jwtService.extractUserId(token), jwtService.extractEmail(token));
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);

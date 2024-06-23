@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class OAuth2ProviderUserResolver {
 
     public OAuth2ProviderUser resolve(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
-        OAuth2Provider oAuth2Provider = OAuth2Provider.from(userRequest.getClientRegistration().getClientId());
+        OAuth2Provider oAuth2Provider = OAuth2Provider.from(userRequest.getClientRegistration().getRegistrationId());
         return OAuth2ProviderUser.builder()
                 .id(oAuth2User.getAttribute(StandardClaimNames.SUB))
                 .userProviderType(oAuth2Provider.userProviderType())

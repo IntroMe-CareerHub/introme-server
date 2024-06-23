@@ -24,13 +24,13 @@ public class IntromeOAuth2UserService implements OAuth2UserService<OAuth2UserReq
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2Provider oAuth2Provider = OAuth2Provider.from(userRequest.getClientRegistration().getClientId());
+        OAuth2Provider oAuth2Provider = OAuth2Provider.from(userRequest.getClientRegistration().getRegistrationId());
         OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
         OAuth2ProviderUser providerUser = oAuth2ProviderUserResolver.resolve(userRequest, oAuth2User);
 
         User user = userQuery.getUserOrNull(oAuth2User.getAttribute(StandardClaimNames.EMAIL), oAuth2Provider.userProviderType());
         if (user == null) {
-            user = userCommand.createUser(providerUser, Role.ADMIN);
+            user = userCommand.createUser(providerUser, Role.USER);
         }
         return IntromeOauth2User.builder()
                 .oauth2User(oAuth2User)
