@@ -2,7 +2,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main, ci-cd" ]
   pull_request:
     branches: [ "main" ]
 
@@ -19,5 +19,12 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Build with Gradle Wrapper
-      run: ./gradlew build
+    - name: Docker hub login
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+
+    - name: Build with Gradle Jib
+      run: ./gradlew jib
