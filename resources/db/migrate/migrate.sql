@@ -23,6 +23,16 @@ CREATE TABLE TALENT (
     ENGINE=InnoDB
     default charset=utf8mb4 collate utf8mb4_general_ci;
 
+CREATE TABLE USER (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(64) NOT NULL,
+    name VARCHAR(64) NOT NULL,
+    role VARCHAR(16) NOT NULL,
+    picture VARCHAR(512) NOT NULL,
+    providerAccountId VARCHAR(512) NULL,
+    providerType VARCHAR(32) NULL
+) ENGINE=InnoDB
+ default charset=utf8mb4 collate utf8mb4_general_ci;
 
 INSERT INTO Company (name, company_info ,image, identity_color)
 VALUES ('카카오', '{ "location": "서울특별시 강서구", "url": "www.kakaocorp.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' , '.icon', '#EEEEEE'),

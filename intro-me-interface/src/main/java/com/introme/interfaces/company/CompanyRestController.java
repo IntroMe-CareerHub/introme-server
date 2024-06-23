@@ -1,6 +1,7 @@
-package com.introme.company;
+package com.introme.interfaces.company;
 
 
+import com.introme.company.CompanyService;
 import com.introme.company.dto.request.CompanyReqDTO;
 import com.introme.company.dto.request.SubmitCompanyReqDTO;
 import com.introme.company.dto.response.AllCompaniesResDTO;

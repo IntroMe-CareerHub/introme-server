@@ -1,0 +1,4 @@
+server:
+  port: 8081
+introMe:
+  redirectUrl: http://localhost:3000/login-success

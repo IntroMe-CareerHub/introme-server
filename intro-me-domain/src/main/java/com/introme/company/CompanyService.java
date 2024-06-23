@@ -10,8 +10,7 @@ import com.introme.company.entity.Company;
 import com.introme.company.entity.PageInfo;
 import com.introme.company.entity.Permission;
 import com.introme.company.repository.CompanyRepository;
-import com.introme.exception.CustomException;
-import com.introme.exception.ServiceErrorCode;
+
 import com.introme.talent.dto.request.TalentReqDTO;
 import com.introme.talent.entity.Talent;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,7 @@ public class CompanyService {
 
     public Company submit(SubmitCompanyReqDTO submitCompanyReqDTO) {
         if (submitCompanyReqDTO == null) {
-            throw new CustomException(ServiceErrorCode.INVALID_REQUEST);
+            throw new IllegalArgumentException();
         }
         return companyRepository.save(Company.toTempEntity(submitCompanyReqDTO));
     }
@@ -59,17 +58,17 @@ public class CompanyService {
     }
 
     public CompanyDetailResDTO findCompanyData(Long companyId) {
-        return CompanyDetailResDTO.toResponseDTO(companyRepository.findById(companyId)
-                .orElseThrow(() -> new CustomException(ServiceErrorCode.COMPANY_NOT_FOUND)));
+        return CompanyDetailResDTO.toResponseDTO(companyRepository.findById(companyId).orElseThrow());
+//                .orElseThrow(() -> new CustomException(ServiceErrorCode.COMPANY_NOT_FOUND)));
     }
 
 
     public SubmitCompanyResDTO submitTalent(Long companyId, TalentReqDTO talentReqDTO) {
-        if (talentReqDTO == null) {
-            throw new CustomException(ServiceErrorCode.INVALID_REQUEST);
-        }
+//        if (talentReqDTO == null) {
+//            throw new CustomException(ServiceErrorCode.INVALID_REQUEST);
+//        }
         Talent talent = Talent.toEntity(talentReqDTO);
-        Company company = companyRepository.findById(companyId).orElseThrow(() -> new CustomException(ServiceErrorCode.COMPANY_NOT_FOUND));
+        Company company = companyRepository.findById(companyId).orElseThrow();
         company.getTalents().add(talent);
         companyRepository.save(company);
 

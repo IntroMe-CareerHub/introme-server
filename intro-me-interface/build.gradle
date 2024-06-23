@@ -1,12 +1,23 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
     id 'com.google.cloud.tools.jib'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 dependencies {
     implementation(project(":intro-me-domain"))
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
     implementation 'io.micrometer:micrometer-registry-prometheus'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+    implementation 'com.auth0:java-jwt:4.4.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 springBoot {
@@ -23,28 +34,29 @@ tasks.named('asciidoctor') {
     dependsOn test
 }
 
-tasks.register("prepareKotlinBuildScriptModel"){}
+tasks.register("prepareKotlinBuildScriptModel") {}
 
 
 jib {
     from {
         image = "eclipse-temurin:17-jdk-alpine"
     }
+
     to {
-        image = 'hyebinnn/intro-me-server-final'
-        tags = ["latest"]
+        def timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
+        image = 'oo9699/intro-me-server:' + timestamp
+
+        tags = ["latest", timestamp]
 
     }
     container {
-        ports =["8080"]
+        ports = ["8080"]
         creationTime = "USE_CURRENT_TIMESTAMP"
-//        extraDirectories {
-//            paths {
-//                path {
-//                    from = file('../intro-me-domain/src/main/resources')
-//                    into = '/app/resources'
-//                }
-//            }
-//        }
     }
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(17)
 }
