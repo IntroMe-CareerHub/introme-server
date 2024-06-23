@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat
 plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
     id 'com.google.cloud.tools.jib'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 dependencies {
@@ -16,6 +17,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
     implementation 'com.auth0:java-jwt:4.4.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 springBoot {
@@ -51,4 +53,10 @@ jib {
         ports = ["8080"]
         creationTime = "USE_CURRENT_TIMESTAMP"
     }
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(17)
 }
