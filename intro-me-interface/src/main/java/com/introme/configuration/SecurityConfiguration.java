@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                 ))
                 .authorizeHttpRequests((authorizeRequest) ->
                         authorizeRequest
-                                .requestMatchers("/", "/h2-console/**", "/login/**").permitAll()
+                                .requestMatchers("/", "/h2-console/**", "/login/**","/login-success").permitAll()
                                 .requestMatchers("/admin/**").hasAnyRole(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )

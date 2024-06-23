@@ -72,7 +72,6 @@ public class JwtService {
     public boolean isTokenValid(String token) {
         try {
             JWT.require(Algorithm.HMAC512(jwtProperties.secretKey())).build().verify(token);
-            log.info("유효한 토큰입니다. {}", token);
             return true;
         } catch (Exception e) {
             log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
@@ -82,10 +81,8 @@ public class JwtService {
 
 
     private static class JwtSupport {
-        private static final Long currentSystemMillis = Clock.system(ZoneId.systemDefault()).millis();
-
         public static Date createExpirationDate(Long expirationPeriod) {
-            return new Date(currentSystemMillis + expirationPeriod);
+            return new Date(Clock.system(ZoneId.systemDefault()).millis() + expirationPeriod * 1000L);
         }
     }
 }
