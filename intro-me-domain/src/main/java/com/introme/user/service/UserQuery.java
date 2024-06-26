@@ -25,4 +25,8 @@ public class UserQuery {
         if (user == null) throw new NoSuchElementException("해당 User 가 존재하지 않음");
         return user;
     }
+
+    public User getUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+    }
 }
