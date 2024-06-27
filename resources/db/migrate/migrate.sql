@@ -28,9 +28,9 @@ CREATE TABLE USER (
     email VARCHAR(64) NOT NULL,
     name VARCHAR(64) NOT NULL,
     role VARCHAR(16) NOT NULL,
-    picture VARCHAR(512) NOT NULL,
-    providerAccountId VARCHAR(512) NULL,
-    providerType VARCHAR(32) NULL
+    picture VARCHAR(512),
+    provider_account_id VARCHAR(512) NULL,
+    provider_type VARCHAR(32) NULL
 ) ENGINE=InnoDB
  default charset=utf8mb4 collate utf8mb4_general_ci;
 
