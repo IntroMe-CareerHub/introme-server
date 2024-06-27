@@ -44,13 +44,13 @@ jib {
 
     to {
         def timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
-        image = 'oo9699/intro-me-server:' + timestamp
+        image = 'hyebinnn/introme-server:' + timestamp
 
         tags = ["latest", timestamp]
 
     }
     container {
-        ports = ["8080"]
+        ports = ["8081"]
         creationTime = "USE_CURRENT_TIMESTAMP"
     }
 }

@@ -31,6 +31,9 @@ public class SecurityConfiguration {
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final Oauth2AuthenticationSuccessHandler oAuth2LoginSuccessHandler;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/", "/h2-console/**", "/login/**", "/login-success"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -43,7 +46,7 @@ public class SecurityConfiguration {
                 ))
                 .authorizeHttpRequests((authorizeRequest) ->
                         authorizeRequest
-                                .requestMatchers("/", "/h2-console/**", "/login/**","/login-success").permitAll()
+                                .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .requestMatchers("/admin/**").hasAnyRole(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )

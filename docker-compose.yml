@@ -1,17 +1,16 @@
 version: '3'
 services:
   app:
-    image: 'oo9699/intro-me-server:latest'
+    image: 'hyebinnn/introme-server:latest'
     ports:
-      - "8080:8080"
+      - "8081:8081"
     networks:
       - app-network
     environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=introme
-      - DB_NAME=introme
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/introme?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_DRIVER: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: introme
     depends_on:
       - db
 
@@ -29,7 +28,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     ports:
-      - "3000:3000"
+      - "3030:3030"
     volumes:
       - ./resources/grafana_data:/var/lib/grafana
     environment:
