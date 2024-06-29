@@ -1,0 +1,36 @@
+@import "Global";
+
+.app {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.jumbotron { background-color: $colorJumbotron }
+.primary { color: $colorPrimary }
+.warning { color: $colorWarning }
+.danger { color: $colorDanger }
+.success { color: $colorSuccess }
+.secondary { color: $colorSecondary }
+.info { color: $colorInfo }
+.white { color: white }
+.bg-primary { background-color: $colorPrimary; color: white }
+.bg-warning { background-color: $colorWarning }
+.bg-danger { background-color: $colorDanger; color: white }
+.bg-success { background-color: $colorSuccess }
+.bg-secondary { background-color: $colorSecondary }
+.bg-info { background-color: $colorInfo }
+.bg-white { background-color: white }
+.bg-transparency { background: none; color: $defaultColor }
+.bg-primary-hover { background-color: #db9b1b }
+.bg-warning-hover { background-color: $colorWarning }
+.bg-danger-hover { background-color: #8e0000 }
+.bg-success-hover { background-color: $colorSuccess }
+.bg-secondary-hover { background-color: $colorSecondary }
+.bg-info-hover { background-color: $colorInfo }
+.bg-white-hover { background-color: #efefef }
+.bg-transparency-hover { background-color: grey }
