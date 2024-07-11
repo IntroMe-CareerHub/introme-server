@@ -99,7 +99,7 @@ public class CompanyRestController {
     }
 
     @Operation(
-            summary = "[User] 특정 기업 인재상 추가하기 API",
+            summary = "[User] 인재상 추가 요청하기 API",
             description = "[User] 특정 기업의 인재상을 추가합니다.",
             tags = "기업별 인재상 리스트 API"
     )
