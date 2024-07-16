@@ -32,7 +32,7 @@ public class SecurityConfiguration {
     private final Oauth2AuthenticationSuccessHandler oAuth2LoginSuccessHandler;
 
     private static final String[] AUTH_WHITELIST = {
-            "/", "/h2-console/**", "/login/**", "/login-success"
+            "/", "/h2-console/**", "/login/**", "/login-success", "/sign-in"
     };
 
     @Bean
