@@ -1,0 +1,29 @@
+$defaultColor: #FBB734;
+$colorJumbotron: #ededed;
+$colorPrimary: $defaultColor;
+$colorWarning: #ffc107;
+$colorDanger: #dc3545;
+$colorSuccess: #28a745;
+$colorSecondary: #6c757d;
+$colorInfo: #17a2b8;
+
+@mixin flexColumn($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+@mixin flex($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-wrap: wrap;
+}
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
