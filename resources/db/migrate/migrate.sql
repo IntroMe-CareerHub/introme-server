@@ -35,15 +35,15 @@ CREATE TABLE USER (
  default charset=utf8mb4 collate utf8mb4_general_ci;
 
 INSERT INTO Company (name, company_info ,image, identity_color)
-VALUES ('카카오', '{ "location": "서울특별시 강서구", "url": "www.kakaocorp.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' , '.icon', '#EEEEEE'),
+VALUES ('카카오', '{ "location": "경기 성남시 분당구 판교역로 221", "url": "www.kakaocorp.com", "techBlog": "https://tech.kakao.com/blog", "recruitUrl":"https://careers.kakao.com/index" }' , 'kakao.png', '#FFFF00'),
        ('신한은행','{ "location": "서울특별시 강서구", "url": "www.kakaocorp.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
-       ('네이버','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
+       ('네이버','{ "location": "경기도 성남시 분당구 분당내곡로 131", "url": "https://www.navercorp.com/, "techBlog": "https://d2.naver.com/home", "recruitUrl":"https://recruit.navercorp.com/" }' ,'naver.png', '#00FF7F'),
        ('네이버2','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
        ('네이버3','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
        ('네이버4','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
        ('네이버5','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
        ('네이버7','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
-       ('네이버8','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
+       ('네이버8','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.iconㅇ', '#EEEEEE'),
        ('네이버9','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
        ('네이버1212','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),
        ('네이버234','{ "location": "서울특별시 강서구", "url": "www.naver.com", "techBlog": "www.techblog.com", "recruitUrl":"www.recruit.com" }' ,'.icon', '#EEEEEE'),

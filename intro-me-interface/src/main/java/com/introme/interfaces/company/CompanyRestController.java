@@ -28,6 +28,7 @@ import java.util.List;
                 version = "v1"
         )
 )
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
