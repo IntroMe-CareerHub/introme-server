@@ -1,0 +1,78 @@
+@import "../../Global";
+
+$sideBarBackgroundColor: #222229;
+$sideBarColor: white;
+
+.sideBar {
+  max-width: 250px;
+  min-width: 250px;
+  height: 100vh;
+  background-color: $sideBarBackgroundColor;
+  color: $sideBarColor;
+  font-weight: bold;
+  @include flexColumn(start, flex-start);
+
+  & > * {
+    width: 100%;
+  }
+
+  .header {
+    @include flexCenter;
+    height: 100px;
+  }
+
+  .section {
+    .companyList {
+      .companyItem {
+        width: 100%;
+        padding: 12.5px;
+        box-sizing: border-box;
+        @include flex(center, flex-start);
+
+        .companyIcon {
+
+        }
+
+        .companyText {
+          @include flex(center, flex-start);
+          padding-left: 10px;
+          padding-top: 3px;
+        }
+
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(82, 82, 82, 0.5);
+        }
+      }
+    }
+  }
+
+  .footer {
+    background-color: #2d3139;
+    height: 80px;
+    margin-top: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    @include flex(center, space-between);
+
+    .userInfo {
+      @include flexCenter;
+
+      .userName {
+        font-size: 16px;
+
+        .userNameNim {
+          margin-left: 3px;
+          font-size: 14px;
+        }
+      }
+
+      .userMoreIcon {
+        font-size: 18px;
+        margin-bottom: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+}

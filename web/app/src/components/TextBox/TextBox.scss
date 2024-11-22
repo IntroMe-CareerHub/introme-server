@@ -1,0 +1,53 @@
+@import "../../Global";
+
+.inputWrapper {
+  padding: 5px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+
+  .inputLabel {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .inputText {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 1px #cccccc;
+
+    input {
+      width: 100%;
+      border-radius: 10px;
+      outline: none;
+      border: 0;
+      font-size: 16px;
+      padding: 15px 15px;
+      box-sizing: border-box;
+      background-color: rgba(0, 0, 0, 0);
+
+      &:disabled {
+        color: #737373;
+      }
+    }
+
+    &.disable {
+      background-color: #f3f3f3;
+    }
+
+    &.focus {
+      box-shadow: inset 0 0 0 2px $defaultColor;
+    }
+  }
+
+  & > .description {
+    width: 100%;
+    padding: 10px 0;
+    color: grey;
+    font-size: 80%;
+
+    & > .square {
+      color: $defaultColor;
+    }
+  }
+}
